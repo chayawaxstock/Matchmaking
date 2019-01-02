@@ -1,0 +1,6 @@
+C:\Users\waxstockc\Documents\GitHub\Matchmaking\Matchmaking-webapi\Dtos\bin\Debug\Dtos.dll
+C:\Users\waxstockc\Documents\GitHub\Matchmaking\Matchmaking-webapi\Dtos\bin\Debug\Dtos.pdb
+C:\Users\waxstockc\Documents\GitHub\Matchmaking\Matchmaking-webapi\Dtos\obj\Debug\Dtos.csprojAssemblyReference.cache
+C:\Users\waxstockc\Documents\GitHub\Matchmaking\Matchmaking-webapi\Dtos\obj\Debug\Dtos.csproj.CoreCompileInputs.cache
+C:\Users\waxstockc\Documents\GitHub\Matchmaking\Matchmaking-webapi\Dtos\obj\Debug\Dtos.dll
+C:\Users\waxstockc\Documents\GitHub\Matchmaking\Matchmaking-webapi\Dtos\obj\Debug\Dtos.pdb
