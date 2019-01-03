@@ -16,10 +16,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $types=Type::all();
-        return response()->json($types,200);
        $userList= User::all();
         return response()->json($userList,200);
+    }
+
+    public function getAllType()
+    {
+        $types=Type::all();
+        return response()->json($types,200);
     }
 
     /**
