@@ -1,0 +1,238 @@
+
+<h1>הכנסת פרטים אישיים</h1>
+<mat-card class="mat-card" dir="rtl">
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="userFormGroup">
+        <ng-template matStepLabel > פרטים בסיסים</ng-template>
+        <mat-card-content>    
+            <form style="margin-right: 10vw;" [formGroup]="userFormGroup">    
+                <table>    
+                    <tr>    
+                        <td>    
+                            <mat-form-field class="demo-full-width">    
+                                <input matInput placeholder="שם פרטי" formControlName="firstName">  
+                                <mat-error *ngIf="hasError('firstName', 'val')">{{userFormGroup.controls['firstName'].errors['val']}}</mat-error>  
+                            </mat-form-field>    
+                        </td>    
+                        <td>    
+                            <mat-form-field class="demo-full-width">    
+                                <input matInput placeholder="משפחה" formControlName="lastName"> 
+                                <mat-error *ngIf="hasError('lastName', 'val')">{{userFormGroup.controls['lastName'].errors['val']}}</mat-error>    
+                            </mat-form-field>    
+                        </td> 
+                        <td>    
+                            <mat-form-field class="demo-full-width">    
+                                <input matInput placeholder="תעודת זהות" formControlName="tz">
+                                <mat-error *ngIf="hasError('tz', 'val')">{{userFormGroup.controls['tz'].errors['val']}}</mat-error>     
+                            </mat-form-field>    
+                        </td>     
+                    </tr>    
+                    <tr>    
+                        <td>    
+                            <mat-form-field class="demo-full-width">    
+                                <input matInput placeholder="אימייל" formControlName="email">    
+                                <mat-error *ngIf="hasError('email', 'val')">{{userFormGroup.controls['email'].errors['val']}}</mat-error>    
+                            </mat-form-field>    
+                        </td>    
+                        <td>    
+                            <mat-form-field class="demo-full-width">    
+                                <input matInput placeholder="טלפון" formControlName="tel">  
+                                <mat-error *ngIf="hasError('tel', 'val')">{{userFormGroup.controls['tel'].errors['val']}}</mat-error>      
+                            </mat-form-field>    
+                        </td> 
+                        <td>    
+                            <mat-form-field class="demo-full-width">    
+                                <input matInput placeholder="פלאפון" formControlName="phone"> 
+                                <mat-error *ngIf="hasError('phone', 'val')">{{userFormGroup.controls['phone'].errors['val']}}</mat-error>       
+                            </mat-form-field>    
+                        </td>     
+                    </tr>  
+                    <tr>    
+                        <td colspan="2">    
+                            <mat-form-field class="demo-full-width">    
+                                <input matInput placeholder="כתובת" formControlName="address"> 
+                                <mat-error *ngIf="hasError('address', 'val')">{{userFormGroup.controls['address'].errors['val']}}</mat-error>       
+                            </mat-form-field>    
+                        </td>    
+                           <td>  
+                            <mat-form-field>    
+                                <mat-select placeholder="עיר" [(value)]="selected" formControlName="city">    
+                                    <mat-option>בחר עיר</mat-option>    
+                                    <mat-option value="1">בני ברק</mat-option>    
+                                    <mat-option value="2">ירושלים</mat-option>    
+                                    <mat-option value="3">ביתר</mat-option>    
+                                </mat-select>    
+                            </mat-form-field>    
+                        </td>    
+                    </tr>    
+                    <tr>    
+                        <td colspan="2">   
+                           
+                            <mat-form-field class="demo-full-width">    
+                                <input  matInput [matDatepicker]="picker" placeholder="תאריך לידה" formControlName="brithday" (dateChange)="changeAge()">    
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>    
+                                <mat-datepicker  #picker></mat-datepicker>    
+                                <mat-error *ngIf="hasError('brithday', 'val')">{{userFormGroup.controls['brithday'].errors['val']}}</mat-error>    
+                            </mat-form-field>    
+                        </td> 
+                        <td>    
+                          <div >גיל :{{age}}</div>   
+                        </td>     
+                    </tr>    
+                    <tr>    
+                        <td>    
+                            <span>מין</span><br><br>    
+                            <mat-radio-group formControlName="gender" required>    
+                                <mat-radio-button value="1" style="margin-left: 2vw;">זכר</mat-radio-button>    
+                                <mat-radio-button value="2">נקבה</mat-radio-button> 
+                            </mat-radio-group>    
+                            <mat-error *ngIf="hasError('gender', 'val')">{{userFormGroup.controls['gender'].errors['val']}}</mat-error>    
+                        </td>    
+                     
+                    </tr>    
+                    <tr>    
+                        <td colspan="2" class="content-center">    
+                            <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
+                            <button mat-stroked-button color="primary" [disabled]="!userFormGroup.valid" class="button-margin" matStepperNext>הבא</button>
+                            <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
+                        </td>    
+                    </tr>    
+                </table>    
+            </form>    
+        </mat-card-content>
+    </mat-step>
+  <mat-step [stepControl]="userFormGroup">
+    <!-- <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>מצב גופני</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Last name, First name" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+          <button mat-stroked-button color="primary" class="button-margin" matStepperPrevious>חזרה</button>
+        <button mat-stroked-button color="primary"  class="button-margin" matStepperNext>הבא</button>
+      </div>
+    </form> -->
+    <form style="margin-right: 10vw;" [formGroup]="userFormGroup"> 
+        <ng-template matStepLabel>מצב גופני</ng-template>   
+        <table>    
+            <tr>    
+                <td>    
+                    <mat-form-field class="demo-full-width">    
+                        <input matInput placeholder="שם פרטי" formControlName="firstName">  
+                        <mat-error *ngIf="hasError('firstName', 'val')">{{userFormGroup.controls['firstName'].errors['val']}}</mat-error>  
+                    </mat-form-field>    
+                </td>    
+                <td>    
+                    <mat-form-field class="demo-full-width">    
+                        <input matInput placeholder="משפחה" formControlName="lastName"> 
+                        <mat-error *ngIf="hasError('lastName', 'val')">{{userFormGroup.controls['lastName'].errors['val']}}</mat-error>    
+                    </mat-form-field>    
+                </td> 
+                <td>    
+                    <mat-form-field class="demo-full-width">    
+                        <input matInput placeholder="תעודת זהות" formControlName="tz">
+                        <mat-error *ngIf="hasError('tz', 'val')">{{userFormGroup.controls['tz'].errors['val']}}</mat-error>     
+                    </mat-form-field>    
+                </td>     
+            </tr>    
+            <tr>    
+                <td>    
+                    <mat-form-field class="demo-full-width">    
+                        <input matInput placeholder="אימייל" formControlName="email">    
+                        <mat-error *ngIf="hasError('email', 'val')">{{userFormGroup.controls['email'].errors['val']}}</mat-error>    
+                    </mat-form-field>    
+                </td>    
+                <td>    
+                    <mat-form-field class="demo-full-width">    
+                        <input matInput placeholder="טלפון" formControlName="tel">  
+                        <mat-error *ngIf="hasError('tel', 'val')">{{userFormGroup.controls['tel'].errors['val']}}</mat-error>      
+                    </mat-form-field>    
+                </td> 
+                <td>    
+                    <mat-form-field class="demo-full-width">    
+                        <input matInput placeholder="פלאפון" formControlName="phone"> 
+                        <mat-error *ngIf="hasError('phone', 'val')">{{userFormGroup.controls['phone'].errors['val']}}</mat-error>       
+                    </mat-form-field>    
+                </td>     
+            </tr>  
+            <tr>    
+                <td colspan="2">    
+                    <mat-form-field class="demo-full-width">    
+                        <input matInput placeholder="כתובת" formControlName="address"> 
+                        <mat-error *ngIf="hasError('address', 'val')">{{userFormGroup.controls['address'].errors['val']}}</mat-error>       
+                    </mat-form-field>    
+                </td>    
+                   <td>  
+                    <mat-form-field>    
+                        <mat-select placeholder="עיר" [(value)]="selected" formControlName="city">    
+                            <mat-option>בחר עיר</mat-option>    
+                            <mat-option value="1">בני ברק</mat-option>    
+                            <mat-option value="2">ירושלים</mat-option>    
+                            <mat-option value="3">ביתר</mat-option>    
+                        </mat-select>    
+                    </mat-form-field>    
+                </td>    
+            </tr>    
+          
+            <tr>    
+                <td>    
+                    <span>מין</span><br><br>    
+                    <mat-radio-group formControlName="gender" required>    
+                        <mat-radio-button value="1" style="margin-left: 2vw;">זכר</mat-radio-button>    
+                        <mat-radio-button value="2">נקבה</mat-radio-button> 
+                    </mat-radio-group>    
+                    <mat-error *ngIf="hasError('gender', 'val')">{{userFormGroup.controls['gender'].errors['val']}}</mat-error>    
+                </td>    
+             
+            </tr>    
+            <tr>    
+                <td colspan="2" class="content-center">    
+                    <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
+                    <button mat-stroked-button color="primary" [disabled]="!userFormGroup.valid" class="button-margin" matStepperNext>הבא</button>
+                    <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
+                </td>    
+            </tr>    
+        </table>    
+    </form>    
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>מצב רוחני</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button color="primary" class="button-margin" matStepperPrevious>חזרה</button>
+        <button mat-stroked-button color="primary" class="button-margin" matStepperNext>הבא</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel> מסגרת</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button color="primary" class="button-margin" matStepperPrevious>חזרה</button>
+        <button mat-stroked-button color="primary" class="button-margin" matStepperNext>הבא</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>סיום ואישור</ng-template>
+   אתה מאשר את פרטי ההצטרפות למאגר הרשומות המקרה שיהיה התאמה השדכנית תעדכן אותך
+    <div>
+      <button mat-stroked-button color="primary" class="button-margin" matStepperPrevious>חזרה</button>
+      <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
+      <button mat-stroked-button color="primary" class="button-margin"> אישור ומעבר לעדיפות</button>
+    </div>
+  </mat-step>
+
+</mat-horizontal-stepper>
+</mat-card>
+
+
+
+
+
