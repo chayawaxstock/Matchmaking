@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { createValidatorText, createValidatorBirthday, createValidatorEmail } from 'src/app/shared/validators/user-validators';
+import { createValidatorText, createValidatorBirthday, createValidatorEmail, createValidatorNumber } from 'src/app/shared/validators/user-validators';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-new-user-profile',
@@ -15,8 +16,10 @@ export class NewUserProfileComponent implements OnInit {
   secondFormGroup: FormGroup;
   public emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   bodyStructureFormGroup: FormGroup;
+  spiritualStateFormGroup: FormGroup;
+  workFormGroup: FormGroup;
   
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder,private userService:UserService) {}
  
   ngOnInit() {
 
@@ -38,21 +41,48 @@ export class NewUserProfileComponent implements OnInit {
     height:number;
     colorHair:Color;
     beard:number;//זקן
-    colorSkin:Color;
+    colorSkin:Color;//עור
     healthCondition:boolean;//מצב בריאותי */
 
     this.bodyStructureFormGroup = this._formBuilder.group({
-      email:['',createValidatorEmail("מייל", 2, 30,this.emailPattern)],
-      tz:['',createValidatorText('תעודת זהות',9,9,/^[0-9]+$/)],
-      phone:['',createValidatorText('פלאפון',10,10,/^[0-9]+$/)],
-      tel:['',createValidatorText('טלפון',7,10,/^[0-9]+$/)],
-      city:['',Validators.required],
-      firstName:['',createValidatorText("שם פרטי", 2, 15)],
-      lastName:['',createValidatorText("שם משפחה", 2, 15)],
-      address:['',createValidatorText("כתובת", 2, 30)],
-      brithday:['',createValidatorBirthday('תאריך לידה')],
-      age:[''],
-      gender:['']
+      bodyStructure:['',createValidatorText("תאור מבנה גוף", 2, 200)],
+      height:['',createValidatorNumber('גובה',120,210)],
+      colorHair:['',Validators.required],
+      beard:[''],
+      colorSkin:[''],
+      healthCondition:[''],
+    });
+
+    // spiritualState:number;
+    // isDrivingLicense:boolean;//רשיון נהיגה
+    // skullcap:number;//כיפה
+    // isComputer:boolean;
+    // isInternet:boolean;
+    // isSmoking:boolean;
+    // torahInstitution:number;//מסגרת תורנית
+    // nameInstitution:string;
+
+    this.spiritualStateFormGroup=this._formBuilder.group({
+      spiritualState:[''],
+      isDrivingLicense:[''],
+      skullcap:['',Validators.required],
+      isComputer:[''],
+      isInternet:[''],
+      isSmoking:[''],
+      nameInstitution:['',createValidatorText('שם מסגרת תורנית',2,20)]
+    });
+
+    
+    // statusWork:number;
+    // nameWork:string;
+    // experience:number;
+    // economicSituation:number;//מצב כלכלי כוכביות
+
+    this.workFormGroup=this._formBuilder.group({
+      statusWork:[''],
+      nameWork:['',createValidatorText('מקום עבודה',2,20)],
+      experience:['',createValidatorNumber('שנות וותק',0,50)],
+      economicSituation:['',createValidatorNumber('מצב כלכלי',0,5)]//מצב כלכלי כוכביות
     });
 
     this.secondFormGroup = this._formBuilder.group({
@@ -64,13 +94,29 @@ export class NewUserProfileComponent implements OnInit {
     return this.userFormGroup.controls[controlName].hasError(errorName);
   }
 
+  public hasError2 = (controlName: string, errorName: string) =>{
+    return this.bodyStructureFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  public hasError3 = (controlName: string, errorName: string) =>{
+    return this.spiritualStateFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  public hasError4 = (controlName: string, errorName: string) =>{
+    return this.workFormGroup.controls[controlName].hasError(errorName);
+  }
+
   addUser()
   {
     console.log(this.userFormGroup.controls);
   }
+
+  addUserDetails()
+  {
+     this.userService.addUserDetails++;
+  }
   changeAge()
   {
-
     this.age=new Date().getFullYear()-new Date(  this.userFormGroup.controls['brithday'].value).getFullYear();
   }
 

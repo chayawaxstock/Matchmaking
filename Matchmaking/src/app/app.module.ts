@@ -14,13 +14,24 @@ import {MatButtonModule, MatCheckboxModule,MatStepperModule,MatFormFieldModule, 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
-
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { LogOutComponent } from './components/log-out/log-out.component';
+import { MatchingComponent } from './components/matching/matching.component';
+import { StarRatingModule } from 'angular-star-rating';
 @NgModule({
   declarations: [
     AppComponent,
-    NewUserProfileComponent
+    NewUserProfileComponent,
+    SignUpComponent,
+    SignInComponent,
+    EditUserComponent,
+    LogOutComponent,
+    MatchingComponent
   ],
   imports: [
+    StarRatingModule.forRoot(),
     CdkTableModule,
     MatAutocompleteModule,
     MatButtonModule,
