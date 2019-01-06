@@ -6,6 +6,7 @@ use App\Type;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -24,6 +25,12 @@ class UserController extends Controller
     {
         $types=Type::all();
         return response()->json($types,200);
+    }
+
+    public function getAllHassids()
+    {
+        $hassids=DB::table('hassids')->get();
+        return response()->json($hassids,200);
     }
 
     /**

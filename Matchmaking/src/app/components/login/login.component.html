@@ -1,0 +1,28 @@
+<mat-card class="example-card" dir="rtl">
+    <mat-card-header>
+      <mat-card-title>כניסה</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="example-form" [formGroup]="loginFormGroup">
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width" >
+              <input matInput  placeholder="שם משתמש"  name="username" required formControlName="userName">
+              <mat-error *ngIf="hasError('userName', 'val')">{{loginFormGroup.controls['userName'].errors['val']}}</mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+          <td><mat-form-field class="example-full-width">
+            <input matInput  placeholder="סיסמה" type="password" name="password" required formControlName="password">
+            <mat-error *ngIf="hasError('password', 'val')">{{loginFormGroup.controls['password'].errors['val']}}</mat-error>
+          </mat-form-field></td>
+        </tr></table>
+      </form>
+      <!-- <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner> -->
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button [disabled]="!loginFormGroup.valid" (click)="login()" color="primary">כניסה</button>
+    </mat-card-actions>
+  </mat-card>

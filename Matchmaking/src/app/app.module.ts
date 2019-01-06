@@ -15,20 +15,29 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { LogOutComponent } from './components/log-out/log-out.component';
 import { MatchingComponent } from './components/matching/matching.component';
 import { StarRatingModule } from 'angular-star-rating';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
+import { NavComponent } from './components/nav/nav.component';
+import { RequestResetComponent } from './components/request-reset/request-reset.component';
+import { ResponseResetComponent } from './components/response-reset/response-reset.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     NewUserProfileComponent,
     SignUpComponent,
-    SignInComponent,
     EditUserComponent,
     LogOutComponent,
-    MatchingComponent
+    MatchingComponent,
+    LoginComponent,
+    NavComponent,
+    RequestResetComponent,
+    ResponseResetComponent,
+
   ],
   imports: [
     StarRatingModule.forRoot(),
@@ -74,7 +83,8 @@ import { StarRatingModule } from 'angular-star-rating';
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
