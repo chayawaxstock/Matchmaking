@@ -14,11 +14,10 @@ export class LoginComponent implements OnInit {
   constructor(public _formBuilder:FormBuilder,public userService:UserService ) { }
 
   ngOnInit() {
-//     debugger;
-//     this.userService.lll().subscribe(d=>{
-// debugger;
-//     })
-
+    debugger;
+    this.userService.lll().subscribe(d=>{
+debugger;
+    })
     this.loginFormGroup = this._formBuilder.group({
       userName: ['', createValidatorText(' שם משתמש', 2, 20)],
       password: ['', createValidatorText(' סיסמה', 4, 50)],
