@@ -166,23 +166,11 @@
                     <mat-form-field class="demo-full-width">
                       <mat-select placeholder="חסידות" formControlName="hassidoot">
                         <mat-option>בחר חסידות </mat-option>
-
                         <mat-option *ngFor="let hassid of hassidoots;let index" value="index"> {{hassid.hassid}}</mat-option>
-                     
                       </mat-select>
                       <mat-error *ngIf="hasError5('hassidoot', 'val')">{{moreDetailsFormGroup.controls['hassidoot'].errors['val']}}</mat-error>
                     </mat-form-field>
                   </td>
-              <td>
-                <mat-form-field class="demo-full-width">
-                  <mat-select placeholder="מצב בריאותי" formControlName="healthCondition">
-                    <mat-option>בחר מצב בריאותי</mat-option>
-                    <mat-option value="1">רגיל </mat-option>
-                    <mat-option value="2">מוגבל </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="hasError2('healthCondition', 'val')">{{bodyStructureFormGroup.controls['healthCondition'].errors['val']}}</mat-error>
-                </mat-form-field>
-              </td>
             </tr>
   
             <tr>
@@ -196,6 +184,43 @@
           </table>
         </form>
       </mat-step>
+
+
+      <mat-step >
+          <ng-template matStepLabel>ממליצים</ng-template>
+          <mat-card-content>
+            <form style="margin-right: 10vw;" >
+              <table>
+                <tr>
+                  <td>
+                    <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="שם " [(ngModel)]="recomends[0].name" name="first">
+                    </mat-form-field>
+                  </td>
+                    <td>
+                    <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="1פלאפון" [(ngModel)]="recomends[0].phone1" min="7" max="10" name="second">
+                    </mat-form-field>
+                  </td>
+                 <td>
+                    <mat-form-field class="demo-full-width">
+                      <input matInput placeholder="פלאפון2" name="three">
+                    </mat-form-field>
+                  </td>
+                </tr>
+            
+                <tr>
+                  <td colspan="2" class="content-center">
+                    <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
+                    <button mat-stroked-button color="primary" [disabled]="!userFormGroup.valid" class="button-margin"
+                      matStepperNext (click)="addUserDetails()">הבא</button>
+                    <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </mat-card-content>
+        </mat-step>
 
 
     <mat-step [stepControl]="bodyStructureFormGroup">

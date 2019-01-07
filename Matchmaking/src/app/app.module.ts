@@ -24,6 +24,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NavComponent } from './components/nav/nav.component';
 import { RequestResetComponent } from './components/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/response-reset/response-reset.component';
+import { EditUserProfileComponent } from './components/edit-user-profile/edit-user-profile.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ResponseResetComponent } from './components/response-reset/response-res
     NavComponent,
     RequestResetComponent,
     ResponseResetComponent,
+    EditUserProfileComponent,
 
   ],
   imports: [

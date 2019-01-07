@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { createValidatorText, createValidatorBirthday, createValidatorEmail, createValidatorNumber } from 'src/app/shared/validators/user-validators';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Hassid } from 'src/app/shared/models/hassid';
+import { Recommend } from 'src/app/shared/models/recommend';
 
 @Component({
   selector: 'app-new-user-profile',
@@ -20,7 +21,11 @@ export class NewUserProfileComponent implements OnInit {
   spiritualStateFormGroup: FormGroup;
   workFormGroup: FormGroup;
   moreDetailsFormGroup: FormGroup;
-  hassidoots: Hassid[];
+  hassidoots: Hassid[]=[];
+  // name:string;
+  //   phone1:string;
+  //   phone2:string;
+  recomends:Recommend[]=[new Recommend(),new Recommend(),new Recommend()];
 
   constructor(private _formBuilder: FormBuilder, private userService: UserService) { }
 
@@ -115,6 +120,7 @@ export class NewUserProfileComponent implements OnInit {
       recomends2: ['']
     });
 
+    
 
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]

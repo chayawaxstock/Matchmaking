@@ -7,7 +7,6 @@ import { BodyStructure } from './bodyStructure';
 import { Work } from './work';
 import { Preference } from './preference';
 import { SpiritualState } from './spiritualState';
-import { Recomends } from './recomends';
 
 export class User{
 
@@ -33,7 +32,7 @@ export class User{
     community1:Community;//עדה
     community2:Community;
     hassidoot:Hassid;
-    recomends:Recomends;//ממליצים
+    recomends:Recommend[];//ממליצים
     bodyStructure:BodyStructure;
     spiritualState:SpiritualState;//מצב רוחני
     work:Work;//עבודה

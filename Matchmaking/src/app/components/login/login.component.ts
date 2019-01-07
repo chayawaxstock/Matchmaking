@@ -14,12 +14,9 @@ export class LoginComponent implements OnInit {
   constructor(public _formBuilder:FormBuilder,public userService:UserService ) { }
 
   ngOnInit() {
-    debugger;
-    this.userService.lll().subscribe(d=>{
-debugger;
-    })
+
     this.loginFormGroup = this._formBuilder.group({
-      userName: ['', createValidatorText(' שם משתמש', 2, 20)],
+      email: ['', createValidatorEmail('מייל', 2, 40)],
       password: ['', createValidatorText(' סיסמה', 4, 50)],
     });
   
@@ -31,7 +28,13 @@ debugger;
 
   login()
   {
-  this.userService.login(this.loginFormGroup.value).subscribe();
+  this.userService.login(this.loginFormGroup.value).subscribe(data=>{
+        console.log(data);
+
+  },err=>{
+    console.log(err)
+    debugger;
+  });
   }
 
   

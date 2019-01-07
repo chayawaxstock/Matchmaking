@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
  
-
-  baseUrl:string="localhost:8000/";
+   options = { headers: new HttpHeaders().set('Content-Type', 'application/json') }
+  baseUrl:string="http://localhost:8000/";
   users:User[];
   addUserDetails:number=0;
   newUser:User;
@@ -35,14 +35,9 @@ export class UserService {
   return this.http.get(this.baseUrl+"allHassids");
   }
 
-  lll():Observable<any> 
-  {
-    return this.http.post('http://localhost:8000/test',{});
-  }
-
   login(values): Observable<any> {
     debugger;
-    return this.http.post(this.baseUrl+"login",values);
+    return this.http.post(this.baseUrl+"api/login",values,this.options);
   }
 
 
