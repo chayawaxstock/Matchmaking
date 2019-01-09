@@ -55,7 +55,7 @@
               </td>
               <td>
                 <mat-form-field>
-                  <mat-select placeholder="עיר" [(value)]="selected" formControlName="city">
+                  <mat-select placeholder="עיר" [(value)]="city" formControlName="city">
                     <mat-option>בחר עיר</mat-option>
                     <mat-option value="1">בני ברק</mat-option>
                     <mat-option value="2">ירושלים</mat-option>
@@ -82,7 +82,7 @@
             <tr>
               <td>
                 <span>מין</span><br><br>
-                <mat-radio-group formControlName="gender" required>
+                <mat-radio-group [(value)]="gender" formControlName="gender" required>
                   <mat-radio-button value="1" style="margin-left: 2vw;">זכר</mat-radio-button>
                   <mat-radio-button value="2">נקבה</mat-radio-button>
                 </mat-radio-group>
@@ -94,7 +94,7 @@
               <td colspan="2" class="content-center">
                 <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
                 <button mat-stroked-button color="primary" [disabled]="!userFormGroup.valid" class="button-margin"
-                  matStepperNext (click)="addUserDetails()">הבא</button>
+                  matStepperNext (click)="addUser1()">הבא</button>
                 <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
               </td>
             </tr>
@@ -104,8 +104,6 @@
     </mat-step>
 <!-- 
    
-    // isChildrenInHisCare:boolean;//ילדים בהחזקתו
-  
     // hassidoot:Hassid;
     // recomends:Recomends;//ממליצים -->
 
@@ -122,7 +120,7 @@
               </td>
               <td>
                 <mat-form-field class="demo-full-width">
-                  <mat-select placeholder=" מצב משפחתי" formControlName="status">
+                  <mat-select placeholder=" מצב משפחתי" formControlName="status" [(value)]="status">
                     <mat-option>בחר מצב משפחתי</mat-option>
                     <mat-option value="1"> רווק/ה</mat-option>
                     <mat-option value="2">אלמן/ה</mat-option>
@@ -136,7 +134,7 @@
             <tr>
               <td>
                 <mat-form-field class="demo-full-width">
-                  <mat-select placeholder="עדה1" formControlName="community1">
+                  <mat-select placeholder="עדה1" formControlName="community1" [(value)]="community1">
                     <mat-option>בחר עדה </mat-option>
                     <mat-option value="1"> אשכנזי/ה</mat-option>
                     <mat-option value="2">ספרדי/ה</mat-option>
@@ -150,7 +148,7 @@
 
               <td>
                   <mat-form-field class="demo-full-width">
-                    <mat-select placeholder="עדה1" formControlName="community2">
+                    <mat-select placeholder="עדה1" formControlName="community2" [(value)]="community2">
                       <mat-option>2בחר עדה </mat-option>
                       <mat-option value="1"> אשכנזי/ה</mat-option>
                       <mat-option value="2">ספרדי/ה</mat-option>
@@ -164,7 +162,7 @@
           
                 <td>
                     <mat-form-field class="demo-full-width">
-                      <mat-select placeholder="חסידות" formControlName="hassidoot">
+                      <mat-select placeholder="חסידות" formControlName="hassidoot" [(value)]="hassidoot">
                         <mat-option>בחר חסידות </mat-option>
                         <mat-option *ngFor="let hassid of hassidoots;let index" value="index"> {{hassid.hassid}}</mat-option>
                       </mat-select>
@@ -176,7 +174,7 @@
             <tr>
               <td colspan="2" class="content-center">
                 <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
-                <button mat-stroked-button color="primary" [disabled]="!bodyStructureFormGroup.valid" class="button-margin"
+                <button mat-stroked-button color="primary" [disabled]="!moreDetailsFormGroup.valid" class="button-margin"
                   matStepperNext (click)="addUserDetails()">הבא</button>
                 <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
               </td>
@@ -242,7 +240,7 @@
             </td>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder="צבע שער" formControlName="colorHair">
+                <mat-select placeholder="צבע שער" formControlName="colorHair" [(value)]="colorHair">
                   <mat-option>בחר צבע שער</mat-option>
                   <mat-option value="1"> שחור</mat-option>
                   <mat-option value="2">לבן</mat-option>
@@ -258,7 +256,7 @@
           <tr>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder="זקן" formControlName="beard">
+                <mat-select placeholder="זקן" formControlName="beard" [(value)]="beard">
                   <mat-option>בחר סוג זקן</mat-option>
                   <mat-option value="1"> מגולח</mat-option>
                   <mat-option value="2">חצוץ</mat-option>
@@ -269,7 +267,7 @@
             </td>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder="צבע עור" formControlName="colorSkin">
+                <mat-select placeholder="צבע עור" formControlName="colorSkin" [(value)]="colorSkin">
                   <mat-option>בחר צבע עור</mat-option>
                   <mat-option value="1"> בהיר</mat-option>
                   <mat-option value="2">כהה</mat-option>
@@ -280,7 +278,7 @@
             </td>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder="מצב בריאותי" formControlName="healthCondition">
+                <mat-select placeholder="מצב בריאותי" [(value)]="healthCondition" formControlName="healthCondition">
                   <mat-option>בחר מצב בריאותי</mat-option>
                   <mat-option value="1">רגיל </mat-option>
                   <mat-option value="2">מוגבל </mat-option>
@@ -294,7 +292,7 @@
             <td colspan="2" class="content-center">
               <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
               <button mat-stroked-button color="primary" [disabled]="!bodyStructureFormGroup.valid" class="button-margin"
-                matStepperNext (click)="addUserDetails()">הבא</button>
+                matStepperNext (click)="bodySAdd()">הבא</button>
               <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
             </td>
           </tr>
@@ -308,7 +306,7 @@
           <tr>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder=" רמה רוחנית" formControlName="spiritualState">
+                <mat-select placeholder=" רמה רוחנית" [(value)]="spiritualState" formControlName="spiritualState">
                   <mat-option>בחר רמה רוחנית</mat-option>
                   <mat-option value="1"> גבוה</mat-option>
                   <mat-option value="2">בינונית</mat-option>
@@ -336,7 +334,7 @@
           <tr>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder="כיפה" formControlName="skullcap">
+                <mat-select placeholder="כיפה" formControlName="skullcap" [(value)]="skullcap">
                   <mat-option>בחר סוג כיפה</mat-option>
                   <mat-option value="1"> סרוגה</mat-option>
                   <mat-option value="2">שחורה עם סרט</mat-option>
@@ -377,7 +375,7 @@
             <td colspan="2" class="content-center">
               <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
               <button mat-stroked-button color="primary" [disabled]="!spiritualStateFormGroup.valid" class="button-margin"
-                matStepperNext (click)="addUserDetails()">הבא</button>
+                matStepperNext (click)="spiritualStateAdd()">הבא</button>
               <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
             </td>
           </tr>
@@ -391,7 +389,7 @@
           <tr>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder=" מצב עבודה" formControlName="statusWork">
+                <mat-select placeholder=" מצב עבודה" [(value)]="statusWork" formControlName="statusWork">
                   <mat-option>בחר מצב עבודה</mat-option>
                   <mat-option value="1"> לא</mat-option>
                   <mat-option value="2">משרה חלקית</mat-option>
@@ -419,7 +417,7 @@
             </td>
             <td>
               <mat-form-field class="demo-full-width">
-                <mat-select placeholder="מצב כלכלי" formControlName="economicSituation">
+                <mat-select placeholder="מצב כלכלי" formControlName="economicSituation" [(value)]="economicSituation">
                   <mat-option>בחר מצב כלכלי</mat-option>
                   <mat-option value="1"> גרוע</mat-option>
                   <mat-option value="2">טוב</mat-option>
@@ -437,7 +435,7 @@
             <td colspan="2" class="content-center">
               <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
               <button mat-stroked-button color="primary" [disabled]="!workFormGroup.valid" class="button-margin"
-                matStepperNext (click)="addUserDetails()">הבא</button>
+                matStepperNext (click)="workAdd()">הבא</button>
               <!-- <button mat-stroked-button color="primary" class="button-margin" [disabled]="!userFormGroup.valid" (click)="addUser()"> אישור ומעבר לעדיפות</button>   -->
             </td>
           </tr>
@@ -450,7 +448,7 @@
       <div>
         <button mat-stroked-button color="primary" class="button-margin" matStepperPrevious>חזרה</button>
         <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
-        <button mat-stroked-button color="primary" class="button-margin"> אישור ומעבר לעדיפות</button>
+        <button mat-stroked-button color="primary" class="button-margin" (click)="add()" > אישור ומעבר לעדיפות</button>
       </div>
     </mat-step>
 

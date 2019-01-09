@@ -8,26 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
  
-   options = { headers: new HttpHeaders().set('Content-Type', 'application/json') }
-  baseUrl:string="http://localhost:8000/";
+  
+  baseUrl:string="http://localhost:65448/api/";
   users:User[];
   addUserDetails:number=0;
   newUser:User;
   constructor(public http:HttpClient) { }
 
-  addNewUser()
-  {
-    if(this.addUserDetails==4)
-    {
-    this.users.push(this.newUser);
-    this.addUserDetails=0;
-    }
-    
-  }
 
-  addToUserDetails()
+  addToUserDetails(user:User):Observable<any>
   {
-    this.addUserDetails++;
+    return this.http.post(this.baseUrl+"updateUser",user);
   }
 
   allHassids():Observable<any>
@@ -37,7 +28,7 @@ export class UserService {
 
   login(values): Observable<any> {
     debugger;
-    return this.http.post(this.baseUrl+"api/login",values,this.options);
+    return this.http.post(this.baseUrl+"login",values);
   }
 
 

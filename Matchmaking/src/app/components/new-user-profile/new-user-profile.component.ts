@@ -4,6 +4,7 @@ import { createValidatorText, createValidatorBirthday, createValidatorEmail, cre
 import { UserService } from 'src/app/shared/services/user.service';
 import { Hassid } from 'src/app/shared/models/hassid';
 import { Recommend } from 'src/app/shared/models/recommend';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-new-user-profile',
@@ -13,6 +14,7 @@ import { Recommend } from 'src/app/shared/models/recommend';
 export class NewUserProfileComponent implements OnInit {
 
   isLinear = false;
+  user:User;
   age: number = 0;
   userFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -26,31 +28,35 @@ export class NewUserProfileComponent implements OnInit {
   //   phone1:string;
   //   phone2:string;
   recomends:Recommend[]=[new Recommend(),new Recommend(),new Recommend()];
+  addUserNum: any;
+  selected: number;
 
   constructor(private _formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
     debugger;
-    this.userService.allHassids().subscribe(data => {
-      this.hassidoots = data;
-    },
-      err => {
-      this.hassidoots = []
-      });
+    // this.userService.allHassids().subscribe(data => {
+    //   this.hassidoots = data;
+    // },
+    //   err => {
+    //   this.hassidoots = []
+    //   });
+    this.user= JSON.parse(localStorage.getItem('user'));
 
+    this.selected=1;
 
     this.userFormGroup = this._formBuilder.group({
-      email: ['', createValidatorEmail("מייל", 2, 30, this.emailPattern)],
-      tz: ['', createValidatorText('תעודת זהות', 9, 9, /^[0-9]+$/)],
-      phone: ['', createValidatorText('פלאפון', 10, 10, /^[0-9]+$/)],
-      tel: ['', createValidatorText('טלפון', 7, 10, /^[0-9]+$/)],
-      city: ['', Validators.required],
-      firstName: ['', createValidatorText("שם פרטי", 2, 15)],
-      lastName: ['', createValidatorText("שם משפחה", 2, 15)],
-      address: ['', createValidatorText("כתובת", 2, 30)],
-      brithday: ['', createValidatorBirthday('תאריך לידה')],
-      age: [''],
-      gender: ['']
+      email: [this.user.email, createValidatorEmail("מייל", 2, 30, this.emailPattern)],
+      tz: [this.user.tz, createValidatorText('תעודת זהות', 9, 9, /^[0-9]+$/)],
+      phone: [this.user.phone, createValidatorText('פלאפון', 10, 10, /^[0-9]+$/)],
+      tel: [this.user.tel, createValidatorText('טלפון', 7, 10, /^[0-9]+$/)],
+      city: [this.user.city, Validators.required],
+      firstName: [this.user.firstName, createValidatorText("שם פרטי", 2, 15)],
+      lastName: [this.user.lastName, createValidatorText("שם משפחה", 2, 15)],
+      address: [this.user.address, createValidatorText("כתובת", 2, 30)],
+      brithday: [this.user.brithday, createValidatorBirthday('תאריך לידה')],
+      age: [this.user.age],
+      gender: [this.user.gender]
     });
     /*  
     bodyStructure:string;
@@ -61,12 +67,12 @@ export class NewUserProfileComponent implements OnInit {
     healthCondition:boolean;//מצב בריאותי */
 
     this.bodyStructureFormGroup = this._formBuilder.group({
-      bodyStructure: ['', createValidatorText("תאור מבנה גוף", 2, 200)],
-      height: ['', createValidatorNumber('גובה', 120, 210)],
-      colorHair: ['', Validators.required],
-      beard: [''],
-      colorSkin: [''],
-      healthCondition: [''],
+      bodyStructure: [this.user.bodyStructure.bodyStructure, createValidatorText("תאור מבנה גוף", 2, 200)],
+      height: [this.user.bodyStructure.height, createValidatorNumber('גובה', 120, 210)],
+      colorHair: [this.user.bodyStructure.colorHair, Validators.required],
+      beard: [this.user.bodyStructure.beard],
+      colorSkin: [this.user.bodyStructure.colorSkin],
+      healthCondition: [this.user.bodyStructure.healthCondition],
     });
 
     // spiritualState:number;
@@ -79,13 +85,13 @@ export class NewUserProfileComponent implements OnInit {
     // nameInstitution:string;
 
     this.spiritualStateFormGroup = this._formBuilder.group({
-      spiritualState: [''],
-      isDrivingLicense: [''],
-      skullcap: ['', Validators.required],
-      isComputer: [''],
-      isInternet: [''],
-      isSmoking: [''],
-      nameInstitution: ['', createValidatorText('שם מסגרת תורנית', 2, 20)]
+      spiritualState: [this.user.spiritualState.spiritualState],
+      isDrivingLicense: [this.user.spiritualState.isDrivingLicense],
+      skullcap: [this.user.spiritualState.skullcap, Validators.required],
+      isComputer: [this.user.spiritualState.isComputer],
+      isInternet: [this.user.spiritualState.isInternet],
+      isSmoking: [this.user.spiritualState.isSmoking],
+      nameInstitution: [this.user.spiritualState.nameInstitution, createValidatorText('שם מסגרת תורנית', 2, 20)]
     });
 
 
@@ -95,29 +101,23 @@ export class NewUserProfileComponent implements OnInit {
     // economicSituation:number;//מצב כלכלי כוכביות
 
     this.workFormGroup = this._formBuilder.group({
-      statusWork: [''],
-      nameWork: ['', createValidatorText('מקום עבודה', 2, 20)],
-      experience: ['', createValidatorNumber('שנות וותק', 0, 50)],
-      economicSituation: ['', createValidatorNumber('מצב כלכלי', 0, 5)]//מצב כלכלי כוכביות
+      statusWork: [this.user.work.statusWork],
+      nameWork: [this.user.work.nameWork, createValidatorText('מקום עבודה', 2, 20)],
+      experience: [this.user.work.experience, createValidatorNumber('שנות וותק', 0, 50)],
+      economicSituation: [this.user.work.economicSituation, createValidatorNumber('מצב כלכלי', 0, 5)]//מצב כלכלי כוכביות
     });
 
-
-    // numChildren:number;
-    // status:Status;//מצב משפחתי
-    // isChildrenInHisCare:boolean;//ילדים בהחזקתו
-    // community1:Community;//עדה
-    // community2:Community;
     // hassidoot:Hassid;
     // recomends:Recomends;//ממליצים
     this.moreDetailsFormGroup = this._formBuilder.group({
-      numChildren: ['', createValidatorNumber('מספר ילדים ', 0, 22)],
-      status: ['', Validators.required],
-      isChildrenInHisCare: [''],
-      community1: ['', Validators.required],
-      community2: [''],
-      hassidoot: [''],
-      recomends1: [''],
-      recomends2: ['']
+      numChildren: [this.user.numChildren, createValidatorNumber('מספר ילדים ', -1, 22)],
+      status: [this.user.numChildren, Validators.required],
+      isChildrenInHisCare: [this.user.numChildren],
+      community1: [this.user.community1, Validators.required],
+      community2: [this.user.community2],
+      hassidoot: [this.user.hassidoot],
+     // recomends1: [this.user.recomends],
+      //recomends2: [this.user.recomends]
     });
 
     
@@ -146,17 +146,74 @@ export class NewUserProfileComponent implements OnInit {
   public hasError5 = (controlName: string, errorName: string) => {
     return this.moreDetailsFormGroup.controls[controlName].hasError(errorName);
   }
+  addUser1()
+  {
+    this.user.tz=this.userFormGroup.controls['tz'].value;
+    this.user.email=this.userFormGroup.controls['email'].value;
+    this.user.phone=this.userFormGroup.controls['phone'].value;
+    this.user.tel=this.userFormGroup.controls['tel'].value;
+    this.user.city=this.userFormGroup.controls['city'].value;
+    this.user.firstName=this.userFormGroup.controls['firstName'].value;
+    this.user.lastName=this.userFormGroup.controls['lastName'].value;
+    this.user.address=this.userFormGroup.controls['address'].value;
+    this.user.brithday=this.userFormGroup.controls['brithday'].value;
+    this.user.age=this.userFormGroup.controls['age'].value;
+    this.user.gender=this.userFormGroup.controls['gender'].value;
 
-
-  addUser() {
-    console.log(this.userFormGroup.controls);
+    localStorage.removeItem('user');
+    localStorage.setItem('user',JSON.stringify(this.user));
   }
+
+  // addUser() {
+  //   console.log(this.userFormGroup.controls);
+  // }
 
   addUserDetails() {
-    this.userService.addUserDetails++;
+    this.user.numChildren=this.moreDetailsFormGroup.controls['numChildren'].value;
+    this.user.isChildrenInHisCare=this.moreDetailsFormGroup.controls['isChildrenInHisCare'].value;
+    this.user.community1=this.moreDetailsFormGroup.controls['community1'].value;
+    this.user.community2=this.moreDetailsFormGroup.controls['community2'].value;
+    this.user.hassidoot=this.moreDetailsFormGroup.controls['hassidoot'].value;
+   // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends1'].value);
+   // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends2'].value);
+
+   localStorage.removeItem('user');
+   localStorage.setItem('user',JSON.stringify(this.user));
   }
+
+  bodySAdd()
+  {
+   this.user.bodyStructure=this.bodyStructureFormGroup.value;
+
+   localStorage.removeItem('user');
+   localStorage.setItem('user',JSON.stringify(this.user));
+  }
+
+  spiritualStateAdd()
+  {
+    this.user.spiritualState=this.spiritualStateFormGroup.value;
+
+    localStorage.removeItem('user');
+    localStorage.setItem('user',JSON.stringify(this.user));
+  }
+
+  workAdd()
+  {
+   this.user.work=this.workFormGroup.value;
+
+   localStorage.removeItem('user');
+   localStorage.setItem('user',JSON.stringify(this.user));
+  }
+
   changeAge() {
     this.age = new Date().getFullYear() - new Date(this.userFormGroup.controls['brithday'].value).getFullYear();
+  }
+
+  add()
+  {
+    this.userService.addToUserDetails(this.user).subscribe(d=>{
+      alert("succ");
+    })
   }
 
 }
