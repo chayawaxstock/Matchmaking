@@ -30,17 +30,29 @@ export class NewUserProfileComponent implements OnInit {
   recomends:Recommend[]=[new Recommend(),new Recommend(),new Recommend()];
   addUserNum: any;
   selected: number;
+  cities: any;
 
   constructor(private _formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
     debugger;
-    // this.userService.allHassids().subscribe(data => {
-    //   this.hassidoots = data;
-    // },
-    //   err => {
-    //   this.hassidoots = []
-    //   });
+
+
+    this.userService.allHassids().subscribe(data => {
+      this.hassidoots = data;
+    },
+      err => {
+      this.hassidoots = []
+      });
+debugger;
+      this.userService.allCities().subscribe(data => {
+        this.cities = data;
+      },
+        err => {
+        this.cities = []
+        });
+
+
     this.user= JSON.parse(localStorage.getItem('user'));
 
     this.selected=1;

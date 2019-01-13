@@ -25,6 +25,8 @@ import { NavComponent } from './components/nav/nav.component';
 import { RequestResetComponent } from './components/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/response-reset/response-reset.component';
 import { EditUserProfileComponent } from './components/edit-user-profile/edit-user-profile.component';
+import { TableGirlComponent } from './components/table-girl/table-girl.component';
+import { TableSonComponent } from './components/table-son/table-son.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { EditUserProfileComponent } from './components/edit-user-profile/edit-us
     RequestResetComponent,
     ResponseResetComponent,
     EditUserProfileComponent,
+    TableGirlComponent,
+    TableSonComponent,
 
   ],
   imports: [
