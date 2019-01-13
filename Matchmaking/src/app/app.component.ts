@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './shared/services/user.service';
 import { Router } from '@angular/router';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { DialogBodyComponent } from './components/dialog-body/dialog-body.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +16,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     public userService: UserService,
-    public router: Router) { }
+    public router: Router,
+    private dialog: MatDialog) { }
 
  ngOnInit(): void {
   if(localStorage.getItem('user'))
@@ -24,4 +28,6 @@ export class AppComponent implements OnInit {
       else this.router.navigate(['profile']);
     }
   }
+
+ 
 }

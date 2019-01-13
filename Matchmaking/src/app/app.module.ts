@@ -28,6 +28,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { AdminComponent } from './components/admin/admin.component';
 import { TableGirlComponent } from './components/table-girl/table-girl.component';
 import { TableSonComponent } from './components/table-son/table-son.component';
+import { DialogBodyComponent } from './components/dialog-body/dialog-body.component';
+import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
+import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
+import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +47,10 @@ import { TableSonComponent } from './components/table-son/table-son.component';
     AdminComponent,
     TableGirlComponent,
     TableSonComponent,
+    DialogBodyComponent,
+    DialogDeleteComponent,
+    DialogEditUserComponent,
+    DialogDetailComponent,
 
   ],
   imports: [
@@ -94,6 +103,7 @@ import { TableSonComponent } from './components/table-son/table-son.component';
     ToastrModule.forRoot() // ToastrModule added
   ],
   providers: [AuthGuardService,UserService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogBodyComponent,DialogDeleteComponent,DialogEditUserComponent]
 })
 export class AppModule { }

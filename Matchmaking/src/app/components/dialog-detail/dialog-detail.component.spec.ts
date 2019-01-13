@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableGirlComponent } from './table-girl.component';
+import { DialogDetailComponent } from './dialog-detail.component';
 
-describe('TableGirlComponent', () => {
-  let component: TableGirlComponent;
-  let fixture: ComponentFixture<TableGirlComponent>;
+describe('DialogDetailComponent', () => {
+  let component: DialogDetailComponent;
+  let fixture: ComponentFixture<DialogDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableGirlComponent ]
+      declarations: [ DialogDetailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableGirlComponent);
+    fixture = TestBed.createComponent(DialogDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

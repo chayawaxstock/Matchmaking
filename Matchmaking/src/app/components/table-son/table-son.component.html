@@ -1,0 +1,84 @@
+
+<div class="marginTable" >
+    <mat-form-field dir="ltr">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="חיפוש" style="direction:rtl !important"  dir="ltr">
+    </mat-form-field>
+    
+    <div class="mat-elevation-z8" style="width: 30vw;
+    padding: 2vw;">
+      <table mat-table [dataSource]="dataSource" matSort style="padding-right: 2vw;">
+    
+        <!-- Progress Column -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>משפחה</th>
+          <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>שם פרטי</th>
+          <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
+        </ng-container>
+    
+        <!-- Color Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>סטטוס</th>
+          <td mat-cell *matCellDef="let row" > {{row.status}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>גיל</th>
+          <td mat-cell *matCellDef="let row" > {{row.age}} </td>
+        </ng-container>
+     
+        <ng-container matColumnDef="community1">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> עדה </th>
+          <td mat-cell *matCellDef="let row" > {{row.community1}} </td>
+        </ng-container> 
+    
+        <ng-container matColumnDef="preference">
+          <th mat-header-cell *matHeaderCellDef> העדפות </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button style="color:cyan" (click)="redirectToDetails(element.id)">
+                <mat-icon class="mat-18">how_to_reg</mat-icon>
+            </button>
+          </td>
+        </ng-container> 
+    
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef> פרטים </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="redirectToDetails(element.id)">
+                <mat-icon class="mat-18">description</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+       
+        <ng-container matColumnDef="update">
+            <th mat-header-cell *matHeaderCellDef> עדכון </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="accent" (click)="redirectToUpdate(element.id)">
+                  <mat-icon class="mat-18">edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+       
+          <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef> מחיקה </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="warn" (click)="redirectToDelete(element.id)">
+                    <mat-icon class="mat-18">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+    
+        
+      </table>
+    
+      <mat-paginator dir="ltr" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+    </div>
