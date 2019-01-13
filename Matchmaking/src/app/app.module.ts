@@ -32,7 +32,7 @@ import { DialogBodyComponent } from './components/dialog-body/dialog-body.compon
 import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
 import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.component';
-
+import { BarRatingModule } from "ngx-bar-rating";
 
 @NgModule({
   declarations: [
@@ -54,6 +54,8 @@ import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.
 
   ],
   imports: [
+    StarRatingModule.forRoot(),
+    BarRatingModule,
     StarRatingModule.forRoot(),
     CdkTableModule,
     MatAutocompleteModule,

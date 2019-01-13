@@ -6,6 +6,7 @@ import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatDialogRef, Mat
 import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 import { filter } from 'rxjs/operators';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 
 export interface UserData {
   id: string;
@@ -32,12 +33,13 @@ const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
 export class TableGirlComponent implements OnInit {
 
   deleteNameDialogRef: MatDialogRef<DialogDeleteComponent>;
-  displayedColumns: string[] = ['firstName', 'lastName', 'age', 'status', 'community1', 'preference', 'details', 'update', 'delete'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'age', 'status', 'community1', 'preference', 'details', 'update', 'delete','match'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   users: any[];
+  DialogDetailComponent: MatDialogRef<DialogDetailComponent, any>;
   dialogEditUserComponent: MatDialogRef<DialogEditUserComponent, any>;
 
   constructor(private dialog: MatDialog) {
@@ -63,6 +65,33 @@ export class TableGirlComponent implements OnInit {
   }
 
   public redirectToDetails = (id: string) => {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+        id: id,
+        title: 'Angular For Beginners'
+    };
+
+    
+    this.DialogDetailComponent = this.dialog.open(DialogDetailComponent,dialogConfig);
+
+    this.DialogDetailComponent
+      .afterClosed()
+      .pipe(filter(name => name))
+      .subscribe(name => {
+
+        this.dataSource = new MatTableDataSource(this.users);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        console.log({ name, content: '' })
+      });
+  }
+
+  public redirectTomatch = (id: string) => {
     console.log(id);
   }
 

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatDialogRef,MAT_DIALOG_DATA, } from '@angular/material';
+
 
 @Component({
   selector: 'app-dialog-detail',
@@ -7,9 +10,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogDetailComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
+  description: string;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<DialogDetailComponent>,
+    @Inject(MAT_DIALOG_DATA) data
+  ) {
+
+    this.description = data.id;
+  }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+    })
   }
+
+  submit(form) {
+    this.dialogRef.close(`ok`);
+  }
+
+save() {
+    this.dialogRef.close(this.form.value);
+}
+
+close() {
+    this.dialogRef.close();
+}
+
 
 }
