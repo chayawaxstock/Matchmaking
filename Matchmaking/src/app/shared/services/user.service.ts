@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { cities } from '../models/cities';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,16 @@ export class UserService {
 
   login(values): Observable<any> {
     return this.http.post(this.baseUrl+"login",values);
+  }
+
+  loadCities():Observable<any>
+  {
+  return this.http.post(this.baseUrl+"loadCities",cities);
+  }
+
+  allCities():Observable<any>
+  {
+  return this.http.post(this.baseUrl+"loadCities",cities);
   }
 
 

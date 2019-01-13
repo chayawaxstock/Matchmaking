@@ -26,6 +26,8 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 import { UserService } from './shared/services/user.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminComponent } from './components/admin/admin.component';
+import { TableGirlComponent } from './components/table-girl/table-girl.component';
+import { TableSonComponent } from './components/table-son/table-son.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { AdminComponent } from './components/admin/admin.component';
     RequestResetComponent,
     ResponseResetComponent,
     AdminComponent,
+    TableGirlComponent,
+    TableSonComponent,
 
   ],
   imports: [
