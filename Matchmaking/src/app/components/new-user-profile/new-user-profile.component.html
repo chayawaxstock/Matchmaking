@@ -161,10 +161,10 @@
                 </td>
           
                 <td>
-                    <mat-form-field class="demo-full-width">
+                    <mat-form-field class="demo-full-width" *ngIf="hassidoots">
                       <mat-select placeholder="חסידות" formControlName="hassidoot" [(value)]="hassidoot">
                         <mat-option>בחר חסידות </mat-option>
-                        <mat-option *ngFor="let hassid of hassidoots;let index" value="index"> {{hassid.hassid}}</mat-option>
+                        <mat-option *ngFor="let hassid of hassidoots" [value]="hassid.id"> {{hassid.hassid}}</mat-option>
                       </mat-select>
                       <mat-error *ngIf="hasError5('hassidoot', 'val')">{{moreDetailsFormGroup.controls['hassidoot'].errors['val']}}</mat-error>
                     </mat-form-field>

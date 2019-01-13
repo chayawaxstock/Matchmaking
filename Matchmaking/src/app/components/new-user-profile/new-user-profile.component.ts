@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { createValidatorText, createValidatorBirthday, createValidatorEmail, createValidatorNumber } from 'src/app/shared/validators/user-validators';
+import { createValidatorText, createValidatorBirthday, createValidatorEmail, createValidatorNumber, createValidatorNumberNotRequired } from 'src/app/shared/validators/user-validators';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Hassid } from 'src/app/shared/models/hassid';
 import { Recommend } from 'src/app/shared/models/recommend';
 import { User } from 'src/app/shared/models/user';
+import { City } from 'src/app/shared/models/city';
+import { Color } from 'src/app/shared/models/color';
 
 @Component({
   selector: 'app-new-user-profile',
@@ -23,7 +25,7 @@ export class NewUserProfileComponent implements OnInit {
   spiritualStateFormGroup: FormGroup;
   workFormGroup: FormGroup;
   moreDetailsFormGroup: FormGroup;
-  hassidoots: Hassid[]=[];
+  hassidoots: Hassid[];
   // name:string;
   //   phone1:string;
   //   phone2:string;
@@ -34,13 +36,15 @@ export class NewUserProfileComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
-    debugger;
-    // this.userService.allHassids().subscribe(data => {
-    //   this.hassidoots = data;
-    // },
-    //   err => {
-    //   this.hassidoots = []
-    //   });
+  
+    this.userService.allHassids().subscribe(data => {
+      debugger;
+      this.hassidoots = data;
+    },
+      err => {
+      this.hassidoots = []
+      });
+
     this.user= JSON.parse(localStorage.getItem('user'));
 
     this.selected=1;
@@ -50,7 +54,7 @@ export class NewUserProfileComponent implements OnInit {
       tz: [this.user.tz, createValidatorText('תעודת זהות', 9, 9, /^[0-9]+$/)],
       phone: [this.user.phone, createValidatorText('פלאפון', 10, 10, /^[0-9]+$/)],
       tel: [this.user.tel, createValidatorText('טלפון', 7, 10, /^[0-9]+$/)],
-      city: [this.user.city, Validators.required],
+      city: [this.user.city.id, Validators.required],
       firstName: [this.user.firstName, createValidatorText("שם פרטי", 2, 15)],
       lastName: [this.user.lastName, createValidatorText("שם משפחה", 2, 15)],
       address: [this.user.address, createValidatorText("כתובת", 2, 30)],
@@ -69,10 +73,10 @@ export class NewUserProfileComponent implements OnInit {
     this.bodyStructureFormGroup = this._formBuilder.group({
       bodyStructure: [this.user.bodyStructure.bodyStructure, createValidatorText("תאור מבנה גוף", 2, 200)],
       height: [this.user.bodyStructure.height, createValidatorNumber('גובה', 120, 210)],
-      colorHair: [this.user.bodyStructure.colorHair, Validators.required],
+      colorHair: [this.user.bodyStructure.colorHair.id, Validators.required],
       beard: [this.user.bodyStructure.beard],
-      colorSkin: [this.user.bodyStructure.colorSkin],
-      healthCondition: [this.user.bodyStructure.healthCondition],
+      colorSkin: [this.user.bodyStructure.colorSkin.id],
+      healthCondition: [this.user.bodyStructure.healthCondition.valueOf()],
     });
 
     // spiritualState:number;
@@ -103,22 +107,23 @@ export class NewUserProfileComponent implements OnInit {
     this.workFormGroup = this._formBuilder.group({
       statusWork: [this.user.work.statusWork],
       nameWork: [this.user.work.nameWork, createValidatorText('מקום עבודה', 2, 20)],
-      experience: [this.user.work.experience, createValidatorNumber('שנות וותק', 0, 50)],
-      economicSituation: [this.user.work.economicSituation, createValidatorNumber('מצב כלכלי', 0, 5)]//מצב כלכלי כוכביות
+      experience: [this.user.work.experience, createValidatorNumberNotRequired('שנות וותק', 0, 50)],
+      economicSituation: [this.user.work.economicSituation, createValidatorNumberNotRequired('מצב כלכלי', 0, 5)]//מצב כלכלי כוכביות
     });
+    
 
     // hassidoot:Hassid;
     // recomends:Recomends;//ממליצים
     this.moreDetailsFormGroup = this._formBuilder.group({
-      numChildren: [this.user.numChildren, createValidatorNumber('מספר ילדים ', -1, 22)],
+      numChildren: [this.user.numChildren, createValidatorNumberNotRequired('מספר ילדים ', -1, 22)],
       status: [this.user.numChildren, Validators.required],
       isChildrenInHisCare: [this.user.numChildren],
       community1: [this.user.community1, Validators.required],
       community2: [this.user.community2],
       hassidoot: [this.user.hassidoot],
-     // recomends1: [this.user.recomends],
-      //recomends2: [this.user.recomends]
+   
     });
+
 
     
 
@@ -152,7 +157,8 @@ export class NewUserProfileComponent implements OnInit {
     this.user.email=this.userFormGroup.controls['email'].value;
     this.user.phone=this.userFormGroup.controls['phone'].value;
     this.user.tel=this.userFormGroup.controls['tel'].value;
-    this.user.city=this.userFormGroup.controls['city'].value;
+    this.user.city=new City();
+    this.user.city.id=this.userFormGroup.controls['city'].value;
     this.user.firstName=this.userFormGroup.controls['firstName'].value;
     this.user.lastName=this.userFormGroup.controls['lastName'].value;
     this.user.address=this.userFormGroup.controls['address'].value;
@@ -181,10 +187,18 @@ export class NewUserProfileComponent implements OnInit {
    localStorage.setItem('user',JSON.stringify(this.user));
   }
 
+  addRecomends()
+  {
+    this.user.recomends=this.recomends;
+  }
+
   bodySAdd()
   {
    this.user.bodyStructure=this.bodyStructureFormGroup.value;
-
+   this.user.bodyStructure.colorHair=new Color();
+   debugger;
+   this.user.bodyStructure.colorHair.id= Number(this.bodyStructureFormGroup.controls['colorHair'].value);
+   this.user.bodyStructure.colorSkin.id=Number(this.bodyStructureFormGroup.controls['colorSkin'].value);
    localStorage.removeItem('user');
    localStorage.setItem('user',JSON.stringify(this.user));
   }

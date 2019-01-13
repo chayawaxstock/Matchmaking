@@ -15,8 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { LogOutComponent } from './components/log-out/log-out.component';
 import { MatchingComponent } from './components/matching/matching.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,21 +22,22 @@ import { LoginComponent } from './components/login/login.component';
 import { NavComponent } from './components/nav/nav.component';
 import { RequestResetComponent } from './components/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/response-reset/response-reset.component';
-import { EditUserProfileComponent } from './components/edit-user-profile/edit-user-profile.component';
+import { AuthGuardService } from './shared/services/auth-guard.service';
+import { UserService } from './shared/services/user.service';
+import { ToastrModule } from 'ngx-toastr';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewUserProfileComponent,
     SignUpComponent,
-    EditUserComponent,
-    LogOutComponent,
     MatchingComponent,
     LoginComponent,
     NavComponent,
     RequestResetComponent,
     ResponseResetComponent,
-    EditUserProfileComponent,
+    AdminComponent,
 
   ],
   imports: [
@@ -86,9 +85,11 @@ import { EditUserProfileComponent } from './components/edit-user-profile/edit-us
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot() // ToastrModule added
   ],
-  providers: [],
+  providers: [AuthGuardService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

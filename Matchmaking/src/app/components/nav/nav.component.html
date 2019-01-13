@@ -12,9 +12,9 @@
         <span class="align-center"></span>
         <span class="example-spacer"></span>
     
-        <button routerLink="/login" mat-button>login </button>
-        <button routerLink="/profile" mat-button>My profile </button>
-        <button mat-button>Log-Out</button>
+        <button *ngIf="!logOut" routerLink="/login" mat-button>login</button>
+        <button *ngIf="logOut" (click)="logOutFunc()" mat-button>logOut</button>
+        <button routerLink="/profile" mat-button>My profile</button>
       </mat-toolbar-row>
     </mat-toolbar>
   

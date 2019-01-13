@@ -27,6 +27,13 @@ export function createValidatorText(cntName: string, min: number, max: number,pa
     ];
   }
 
+  export function createValidatorNumberNotRequired(cntName: string, min: number, max: number): Array<ValidatorFn>  {
+    return [
+      f => f.value && Number( f.value) > max ? { "val": `${cntName} מקסימום עד ${max}` } : null,
+      f => f.value && Number( f.value)< min ? { "val": `${cntName} מינימום עד ${min}` } : null,
+    ];
+  }
+
   export function createValidatorBirthday(cntName: string): Array<ValidatorFn>  {
     return [
       f => !f.value ? { "val": ` ${cntName}  שדה חובה` } : null,
