@@ -32,7 +32,7 @@ export class User{
     community1:Community;//עדה
     community2:Community;
     hassidoot:Hassid;
-    recomends:Recommend[];//ממליצים
+    recommends:Recommend[];//ממליצים
     bodyStructure:BodyStructure;
     spiritualState:SpiritualState;//מצב רוחני
     work:Work;//עבודה

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { createValidatorText, createValidatorBirthday, createValidatorEmail, createValidatorNumber, createValidatorNumberNotRequired } from 'src/app/shared/validators/user-validators';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Hassid } from 'src/app/shared/models/hassid';
@@ -7,6 +7,10 @@ import { Recommend } from 'src/app/shared/models/recommend';
 import { User } from 'src/app/shared/models/user';
 import { City } from 'src/app/shared/models/city';
 import { Color } from 'src/app/shared/models/color';
+import { Status } from 'src/app/shared/models/status';
+import { Community } from 'src/app/shared/models/community';
+
+
 
 @Component({
   selector: 'app-new-user-profile',
@@ -15,8 +19,9 @@ import { Color } from 'src/app/shared/models/color';
 })
 export class NewUserProfileComponent implements OnInit {
 
+  myControl = new FormControl();
   isLinear = false;
-  user:User;
+  user: User;
   age: number = 0;
   userFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -29,37 +34,62 @@ export class NewUserProfileComponent implements OnInit {
   // name:string;
   //   phone1:string;
   //   phone2:string;
-  recomends:Recommend[]=[new Recommend(),new Recommend(),new Recommend()];
+
   addUserNum: any;
   selected: number;
   cities: any;
-
-  constructor(private _formBuilder: FormBuilder, private userService: UserService) { }
+  desplayMan: boolean = true;
+  desplayFaman: boolean = true;
+  seenumChildren: boolean = false;
+  seeHassidoot: boolean = false;
+  recomend1: Recommend = new Recommend();
+  recomend2: Recommend = new Recommend();
+  recomend3: Recommend = new Recommend();
+  constructor(private _formBuilder: FormBuilder, private userService: UserService) {
+    this.recomend1 = new Recommend();
+    this.recomend2 = new Recommend();
+    this.recomend3 = new Recommend();
+  }
 
   ngOnInit() {
-  
+
     this.userService.allHassids().subscribe(data => {
+      console.log(data);
       this.hassidoots = data;
     },
       err => {
-      this.hassidoots = []
+        this.hassidoots = []
       });
 
-      this.userService.allCities().subscribe(data => {
-        this.cities = data;
-      },
-        err => {
-        this.cities = [] 
-        });
+    this.userService.allCities().subscribe(data => {
+      this.cities = data;
+    },
+      err => {
+        this.cities = []
+      });
 
 
-    this.user= JSON.parse(localStorage.getItem('user'));
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if (this.user.community1.id == 4 || this.user.community2.id == 4)
+      this.seeHassidoot = true;
+    if (this.user.gender == 1)
+      this.desplayMan = true;
+    else this.desplayMan = false;
+    this.selected = 1;
 
-    this.selected=1;
+    if (this.user.recommends.length > 0)
+      this.recomend1 = this.user.recommends[0];
+    else this.user.recommends.push(new Recommend());
+    if (this.user.recommends.length > 1)
+      this.recomend2 = this.user.recommends[1];
+    else this.user.recommends.push(new Recommend());
+    if (this.user.recommends.length > 2)
+      this.recomend3 = this.user.recommends[2];
+    else this.user.recommends.push(new Recommend());
+
 
     this.userFormGroup = this._formBuilder.group({
       email: [this.user.email, createValidatorEmail("מייל", 2, 30, this.emailPattern)],
-      tz: [this.user.tz, createValidatorText('תעודת זהות', 9, 9, /^[0-9]+$/)],
       phone: [this.user.phone, createValidatorText('פלאפון', 10, 10, /^[0-9]+$/)],
       tel: [this.user.tel, createValidatorText('טלפון', 7, 10, /^[0-9]+$/)],
       city: [this.user.city.id, Validators.required],
@@ -70,6 +100,8 @@ export class NewUserProfileComponent implements OnInit {
       age: [this.user.age],
       gender: [this.user.gender]
     });
+
+
     /*  
     bodyStructure:string;
     height:number;
@@ -79,12 +111,12 @@ export class NewUserProfileComponent implements OnInit {
     healthCondition:boolean;//מצב בריאותי */
 
     this.bodyStructureFormGroup = this._formBuilder.group({
-      bodyStructure: [this.user.bodyStructure.bodyStructure, createValidatorText("תאור מבנה גוף", 2, 200)],
+      bodyStructure: [this.user.bodyStructure.bodyStructureContent, createValidatorText("תאור מבנה גוף", 2, 200)],
       height: [this.user.bodyStructure.height, createValidatorNumber('גובה', 120, 210)],
       colorHair: [this.user.bodyStructure.colorHair.id, Validators.required],
       beard: [this.user.bodyStructure.beard],
       colorSkin: [this.user.bodyStructure.colorSkin.id],
-      healthCondition: [this.user.bodyStructure.healthCondition.valueOf()],
+      healthCondition: [this.user.bodyStructure.healthCondition],
     });
 
     // spiritualState:number;
@@ -118,22 +150,22 @@ export class NewUserProfileComponent implements OnInit {
       experience: [this.user.work.experience, createValidatorNumberNotRequired('שנות וותק', 0, 50)],
       economicSituation: [this.user.work.economicSituation, createValidatorNumberNotRequired('מצב כלכלי', 0, 5)]//מצב כלכלי כוכביות
     });
-    
+
 
     // hassidoot:Hassid;
     // recomends:Recomends;//ממליצים
     this.moreDetailsFormGroup = this._formBuilder.group({
       numChildren: [this.user.numChildren, createValidatorNumberNotRequired('מספר ילדים ', -1, 22)],
-      status: [this.user.numChildren, Validators.required],
-      isChildrenInHisCare: [this.user.numChildren],
-      community1: [this.user.community1, Validators.required],
-      community2: [this.user.community2],
+      status: [this.user.status.id, Validators.required],
+      isChildrenInHisCare: [this.user.isChildrenInHisCare],
+      community1: [this.user.community1.id, Validators.required],
+      community2: [this.user.community2.id],
       hassidoot: [this.user.hassidoot],
-   
+
     });
 
 
-    
+
 
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -159,23 +191,21 @@ export class NewUserProfileComponent implements OnInit {
   public hasError5 = (controlName: string, errorName: string) => {
     return this.moreDetailsFormGroup.controls[controlName].hasError(errorName);
   }
-  addUser1()
-  {
-    this.user.tz=this.userFormGroup.controls['tz'].value;
-    this.user.email=this.userFormGroup.controls['email'].value;
-    this.user.phone=this.userFormGroup.controls['phone'].value;
-    this.user.tel=this.userFormGroup.controls['tel'].value;
-    this.user.city=new City();
-    this.user.city.id=this.userFormGroup.controls['city'].value;
-    this.user.firstName=this.userFormGroup.controls['firstName'].value;
-    this.user.lastName=this.userFormGroup.controls['lastName'].value;
-    this.user.address=this.userFormGroup.controls['address'].value;
-    this.user.brithday=this.userFormGroup.controls['brithday'].value;
-    this.user.age=this.userFormGroup.controls['age'].value;
-    this.user.gender=this.userFormGroup.controls['gender'].value;
+  addUser1() {
+    this.user.email = this.userFormGroup.controls['email'].value;
+    this.user.phone = this.userFormGroup.controls['phone'].value;
+    this.user.tel = this.userFormGroup.controls['tel'].value;
+    this.user.city = new City();
+    this.user.city.id = this.userFormGroup.controls['city'].value;
+    this.user.firstName = this.userFormGroup.controls['firstName'].value;
+    this.user.lastName = this.userFormGroup.controls['lastName'].value;
+    this.user.address = this.userFormGroup.controls['address'].value;
+    this.user.brithday = this.userFormGroup.controls['brithday'].value;
+    this.user.age = this.userFormGroup.controls['age'].value;
+    this.user.gender = this.userFormGroup.controls['gender'].value;
 
     localStorage.removeItem('user');
-    localStorage.setItem('user',JSON.stringify(this.user));
+    localStorage.setItem('user', JSON.stringify(this.user));
   }
 
   // addUser() {
@@ -183,59 +213,95 @@ export class NewUserProfileComponent implements OnInit {
   // }
 
   addUserDetails() {
-    this.user.numChildren=this.moreDetailsFormGroup.controls['numChildren'].value;
-    this.user.isChildrenInHisCare=this.moreDetailsFormGroup.controls['isChildrenInHisCare'].value;
-    this.user.community1=this.moreDetailsFormGroup.controls['community1'].value;
-    this.user.community2=this.moreDetailsFormGroup.controls['community2'].value;
-    this.user.hassidoot=this.moreDetailsFormGroup.controls['hassidoot'].value;
-   // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends1'].value);
-   // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends2'].value);
-
-   localStorage.removeItem('user');
-   localStorage.setItem('user',JSON.stringify(this.user));
-  }
-
-  addRecomends()
-  {
-    this.user.recomends=this.recomends;
-  }
-
-  bodySAdd()
-  {
-   this.user.bodyStructure=this.bodyStructureFormGroup.value;
-   this.user.bodyStructure.colorHair=new Color();
-   debugger;
-   this.user.bodyStructure.colorHair.id= Number(this.bodyStructureFormGroup.controls['colorHair'].value);
-   this.user.bodyStructure.colorSkin.id=Number(this.bodyStructureFormGroup.controls['colorSkin'].value);
-   localStorage.removeItem('user');
-   localStorage.setItem('user',JSON.stringify(this.user));
-  }
-
-  spiritualStateAdd()
-  {
-    this.user.spiritualState=this.spiritualStateFormGroup.value;
+    debugger;
+    this.user.status=new Status();
+    this.user.status.id=Number(this.moreDetailsFormGroup.controls['status'].value);
+    this.user.numChildren = this.moreDetailsFormGroup.controls['numChildren'].value;
+    this.user.isChildrenInHisCare = this.moreDetailsFormGroup.controls['isChildrenInHisCare'].value;
+    this.user.community1=new Community();
+    this.user.community1.id = this.moreDetailsFormGroup.controls['community1'].value;
+    this.user.community2=new Community();
+    this.user.community2.id = this.moreDetailsFormGroup.controls['community2'].value;
+    this.user.hassidoot = this.moreDetailsFormGroup.controls['hassidoot'].value;
+    // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends1'].value);
+    // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends2'].value);
 
     localStorage.removeItem('user');
-    localStorage.setItem('user',JSON.stringify(this.user));
+    localStorage.setItem('user', JSON.stringify(this.user));
   }
 
-  workAdd()
-  {
-   this.user.work=this.workFormGroup.value;
 
-   localStorage.removeItem('user');
-   localStorage.setItem('user',JSON.stringify(this.user));
+  bodySAdd() {
+    debugger;
+    this.user.bodyStructure = this.bodyStructureFormGroup.value;
+    this.user.bodyStructure.bodyStructureContent=this.bodyStructureFormGroup.controls['bodyStructure'].value;
+    this.user.bodyStructure.colorHair = new Color();
+    debugger;
+    this.user.bodyStructure.colorHair.id = Number(this.bodyStructureFormGroup.controls['colorHair'].value);
+    this.user.bodyStructure.colorSkin=new Color();
+    this.user.bodyStructure.colorSkin.id = Number(this.bodyStructureFormGroup.controls['colorSkin'].value);
+
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(this.user));
+  }
+
+  spiritualStateAdd() {
+    this.user.spiritualState = this.spiritualStateFormGroup.value;
+
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(this.user));
+  }
+
+  workAdd() {
+    this.user.work = this.workFormGroup.value;
+
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(this.user));
   }
 
   changeAge() {
     this.age = new Date().getFullYear() - new Date(this.userFormGroup.controls['brithday'].value).getFullYear();
   }
 
-  add()
-  {
-    this.userService.addToUserDetails(this.user).subscribe(d=>{
+  add() {
+    this.userService.addToUserDetails(this.user).subscribe(d => {
       alert("succ");
     })
+  }
+
+  changeGender(num: number) {
+
+    if (num == 2) {
+      this.desplayMan = false;
+      this.desplayFaman = true;
+    }
+    else {
+      this.desplayFaman = false;
+      this.desplayMan = true;
+    }
+  }
+
+  changeStatus() {
+    debugger;
+    if (this.moreDetailsFormGroup.controls['status'].value != 1) {
+      this.seenumChildren = true;
+    }
+    else this.seenumChildren = false;
+  }
+
+  selectCommunity() {
+    debugger;
+    if (this.moreDetailsFormGroup.controls['community1'].value == 4 || this.moreDetailsFormGroup.controls['community2'].value == 4) {
+      this.seeHassidoot = true;
+    }
+    else this.seeHassidoot = false;
+  }
+
+  addRec() {
+    this.user.recommends =[];
+    this.user.recommends.push(this.recomend1);
+    this.user.recommends.push(this.recomend2);
+    this.user.recommends.push(this.recomend3);
   }
 
 }

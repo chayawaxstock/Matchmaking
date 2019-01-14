@@ -1,4 +1,6 @@
 export class Color{
     id:number;
-    color:string;
+    colorName:string;
+
+  
 }

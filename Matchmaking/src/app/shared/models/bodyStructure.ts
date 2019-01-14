@@ -3,7 +3,7 @@ import { Color } from './color';
 //מבנה גוף
 export class BodyStructure{
     id:number;
-    bodyStructure:string;
+    bodyStructureContent:string;
     height:number;
     colorHair:Color;
     beard:number;//זקן

@@ -1,5 +1,5 @@
 export class City{
     id:number;
-    name:string;
+    cityName:string;
     flag:string;
 }

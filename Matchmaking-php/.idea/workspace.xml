@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="97e086c9-7129-4a55-9a82-c5a15809205c" name="Default Changelist" comment="" />
+    <list default="true" id="97e086c9-7129-4a55-9a82-c5a15809205c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Matchmaking/src/app/components/new-user-profile/new-user-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Matchmaking/src/app/components/new-user-profile/new-user-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Matchmaking/src/app/components/new-user-profile/new-user-profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Matchmaking/src/app/components/new-user-profile/new-user-profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Matchmaking/src/app/shared/models/city.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Matchmaking/src/app/shared/models/city.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Matchmaking/src/app/shared/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Matchmaking/src/app/shared/models/user.ts" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -369,6 +374,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49919224" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" sideWeight="0.50080776" side_tool="true" visible="true" weight="0.25" />
