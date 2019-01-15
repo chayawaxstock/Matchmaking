@@ -4,9 +4,9 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="חיפוש" style="direction:rtl !important"  dir="ltr">
     </mat-form-field>
     
-    <div class="mat-elevation-z8" style="width: 30vw;
+    <div  style="width: 30vw;
     padding: 2vw;">
-      <table mat-table [dataSource]="dataSource" matSort style="padding-right: 2vw;">
+      <table mat-table [dataSource]="dataSource" matSort style="padding-right: 2vw;" >
     
         <!-- Progress Column -->
         <ng-container matColumnDef="lastName">

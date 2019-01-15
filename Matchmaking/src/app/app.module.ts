@@ -33,6 +33,8 @@ import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
 import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.component';
 import { BarRatingModule } from "ngx-bar-rating";
+import { PreferenceComponent } from './components/preference/preference.component';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { BarRatingModule } from "ngx-bar-rating";
     DialogDeleteComponent,
     DialogEditUserComponent,
     DialogDetailComponent,
+    PreferenceComponent,
 
   ],
   imports: [
@@ -102,10 +105,11 @@ import { BarRatingModule } from "ngx-bar-rating";
     BrowserAnimationsModule,
     HttpClientModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot() // ToastrModule added
+    ToastrModule.forRoot(),// ToastrModule added
+    Ng5SliderModule,
   ],
   providers: [AuthGuardService,UserService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogBodyComponent,DialogDeleteComponent,DialogEditUserComponent]
+  entryComponents: [DialogBodyComponent,DialogDeleteComponent,DialogEditUserComponent,DialogDetailComponent]
 })
 export class AppModule { }

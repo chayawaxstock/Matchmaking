@@ -7,6 +7,7 @@ import { RequestResetComponent } from './components/request-reset/request-reset.
 import { ResponseResetComponent } from './components/response-reset/response-reset.component';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { AdminComponent } from './components/admin/admin.component';
+import { PreferenceComponent } from './components/preference/preference.component';
 
 const routes: Routes = [
   {
@@ -17,22 +18,20 @@ const routes: Routes = [
   },
   {
     path: 'signup', component: SignUpComponent,
-
   },
   {
     path: 'profile', component: NewUserProfileComponent,canActivate:[AuthGuardService]
-
   },
   {
     path: 'request-password-reset', component: RequestResetComponent,
-
   }, {
     path: 'response-password-reset', component: ResponseResetComponent,
-
   },
   {
     path: 'admin', component: AdminComponent ,canActivate:[AuthGuardService]
-
+  },
+  {
+    path: 'preferences', component: PreferenceComponent 
   }
 
 ];

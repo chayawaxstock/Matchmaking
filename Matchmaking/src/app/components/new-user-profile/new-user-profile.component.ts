@@ -9,6 +9,8 @@ import { City } from 'src/app/shared/models/city';
 import { Color } from 'src/app/shared/models/color';
 import { Status } from 'src/app/shared/models/status';
 import { Community } from 'src/app/shared/models/community';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 
@@ -45,7 +47,8 @@ export class NewUserProfileComponent implements OnInit {
   recomend1: Recommend = new Recommend();
   recomend2: Recommend = new Recommend();
   recomend3: Recommend = new Recommend();
-  constructor(private _formBuilder: FormBuilder, private userService: UserService) {
+  constructor(private _formBuilder: FormBuilder, private userService: UserService,private toastr: ToastrService
+    ,private router:Router) {
     this.recomend1 = new Recommend();
     this.recomend2 = new Recommend();
     this.recomend3 = new Recommend();
@@ -129,7 +132,7 @@ export class NewUserProfileComponent implements OnInit {
     // nameInstitution:string;
 
     this.spiritualStateFormGroup = this._formBuilder.group({
-      spiritualState: [this.user.spiritualState.spiritualState],
+      spiritualState: [this.user.spiritualState.spiritualStateInt],
       isDrivingLicense: [this.user.spiritualState.isDrivingLicense],
       skullcap: [this.user.spiritualState.skullcap, Validators.required],
       isComputer: [this.user.spiritualState.isComputer],
@@ -213,7 +216,7 @@ export class NewUserProfileComponent implements OnInit {
   // }
 
   addUserDetails() {
-    debugger;
+
     this.user.status=new Status();
     this.user.status.id=Number(this.moreDetailsFormGroup.controls['status'].value);
     this.user.numChildren = this.moreDetailsFormGroup.controls['numChildren'].value;
@@ -232,11 +235,11 @@ export class NewUserProfileComponent implements OnInit {
 
 
   bodySAdd() {
-    debugger;
+ 
     this.user.bodyStructure = this.bodyStructureFormGroup.value;
     this.user.bodyStructure.bodyStructureContent=this.bodyStructureFormGroup.controls['bodyStructure'].value;
     this.user.bodyStructure.colorHair = new Color();
-    debugger;
+  
     this.user.bodyStructure.colorHair.id = Number(this.bodyStructureFormGroup.controls['colorHair'].value);
     this.user.bodyStructure.colorSkin=new Color();
     this.user.bodyStructure.colorSkin.id = Number(this.bodyStructureFormGroup.controls['colorSkin'].value);
@@ -247,6 +250,7 @@ export class NewUserProfileComponent implements OnInit {
 
   spiritualStateAdd() {
     this.user.spiritualState = this.spiritualStateFormGroup.value;
+    this.user.spiritualState.spiritualStateInt=this.spiritualStateFormGroup.controls['spiritualState'].value;
 
     localStorage.removeItem('user');
     localStorage.setItem('user', JSON.stringify(this.user));
@@ -265,7 +269,15 @@ export class NewUserProfileComponent implements OnInit {
 
   add() {
     this.userService.addToUserDetails(this.user).subscribe(d => {
-      alert("succ");
+      this.userService.user=this.user;
+      this.toastr.success('הפרטים עדכנו בהצלחה', '', {
+        timeOut: 2000
+      });
+      this.router.navigate(['/preferences'])
+    },err=>{
+      this.toastr.error('עדכון הפרטים נכשל', '', {
+        timeOut: 2000
+      });
     })
   }
 
@@ -282,7 +294,7 @@ export class NewUserProfileComponent implements OnInit {
   }
 
   changeStatus() {
-    debugger;
+  
     if (this.moreDetailsFormGroup.controls['status'].value != 1) {
       this.seenumChildren = true;
     }
@@ -290,7 +302,6 @@ export class NewUserProfileComponent implements OnInit {
   }
 
   selectCommunity() {
-    debugger;
     if (this.moreDetailsFormGroup.controls['community1'].value == 4 || this.moreDetailsFormGroup.controls['community2'].value == 4) {
       this.seeHassidoot = true;
     }

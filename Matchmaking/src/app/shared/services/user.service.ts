@@ -14,6 +14,7 @@ export class UserService {
   users:User[];
   addUserDetails:number=0;
   newUser:User;
+  user: User;
   constructor(public http:HttpClient) { }
 
 

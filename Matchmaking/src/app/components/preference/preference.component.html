@@ -1,0 +1,104 @@
+<!-- 
+
+economicSituation:[''] -->
+
+<!-- 
+<form [formGroup]="preferenceFormGroup">
+    <p>Low value: {{ preferenceFormGroup.value.sliderControl[0] }}</p>
+    <p>High value: {{ preferenceFormGroup.value.sliderControl[1] }}</p>
+    <ng5-slider [options]="options" formControlName="sliderControl"></ng5-slider>
+  </form> -->
+
+
+<mat-card class="mat-card" dir="rtl">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title> העדפות</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form style="margin-right: 10vw;" [formGroup]="preferenceFormGroup">
+      <table>
+        <tr>
+          <td colspan="4">
+            <mat-form-field class="demo-full-width" style="visibility:hidden; ">
+              <input matInput placeholder="מגיל עד גיל" style="visibility: hidden; " >
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <mat-form-field class="demo-full-width">
+              <mat-select placeholder="צבע עור" formControlName="skinColor" [(value)]="skinColor">
+                <mat-option>בחר צבע עור</mat-option>
+                <mat-option [value]="1"> בהיר</mat-option>
+                <mat-option [value]="2">כהה</mat-option>
+                <mat-option [value]="3">בינוני</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+
+          <td colspan="4">
+            <mat-form-field class="demo-full-width">
+              <mat-select placeholder="מצב בריאותי" [(value)]="healthCondition" formControlName="healthCondition">
+                <mat-option>בחר מצב בריאותי</mat-option>
+                <mat-option [value]=false>רגיל </mat-option>
+                <mat-option [value]=true>מוגבל </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <mat-form-field class="demo-full-width">
+              <mat-select placeholder=" רמה רוחנית" [(value)]="spiritualStateInt" formControlName="spiritualStateInt">
+                <mat-option>בחר רמה רוחנית</mat-option>
+                <mat-option [value]="1"> גבוה</mat-option>
+                <mat-option [value]="2">בינונית</mat-option>
+                <mat-option [value]="3">נמוכה</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+
+          <td colspan="4">
+            <mat-form-field class="demo-full-width">
+              <mat-select placeholder="מצב כלכלי" formControlName="economicSituation" [(value)]="economicSituation">
+                <mat-option>בחר מצב כלכלי</mat-option>
+                <mat-option [value]="1"> גרוע</mat-option>
+                <mat-option [value]="2">טוב</mat-option>
+                <mat-option [value]="3">משופר </mat-option>
+                <mat-option [value]="4">טוב מאוד </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" style="padding-bottom: 20px;">
+            <mat-slide-toggle formControlName="isSmoking" color="primary"> מעשנ/ת </mat-slide-toggle>
+          </td>
+          <td colspan="4" style="padding-bottom: 20px;">
+            <mat-slide-toggle formControlName="isDrivingLicense" color="primary"> רשיון נהיגה </mat-slide-toggle>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" style="padding-bottom: 20px;">
+            <mat-slide-toggle formControlName="isInternet" color="primary"> אינטרנט </mat-slide-toggle>
+          </td>
+          <td colspan="4" style="padding-bottom: 20px;">   
+            <mat-slide-toggle formControlName="isComputer" color="primary"> מחשב </mat-slide-toggle>
+          </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <label>מגיל עד גיל</label>
+              <ng5-slider [options]="options" formControlName="sliderControl"></ng5-slider>
+            </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="content-center">
+            <button mat-stroked-button color="primary" class="button-margin" (click)="add()">עדכון העדפות</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card-content>
+</mat-card>

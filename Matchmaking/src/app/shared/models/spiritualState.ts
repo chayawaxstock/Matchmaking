@@ -1,6 +1,6 @@
 export class SpiritualState{
     id:number;
-    spiritualState:number;
+    spiritualStateInt:number;
     isDrivingLicense:boolean;//רשיון נהיגה
     skullcap:number;//כיפה
     yearTshuva:number;//שנים בתשובה
@@ -9,4 +9,5 @@ export class SpiritualState{
     isSmoking:boolean;
     torahInstitution:number;//מסגרת תורנית
     nameInstitution:string;//שם המסגרת
+  
 }

@@ -1,4 +1,4 @@
-<h1>הכנסת פרטים אישיים</h1>
+
 <mat-card class="mat-card" dir="rtl">
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="userFormGroup">
@@ -301,8 +301,8 @@
               <mat-form-field class="demo-full-width">
                 <mat-select placeholder="מצב בריאותי" [(value)]="healthCondition" formControlName="healthCondition">
                   <mat-option>בחר מצב בריאותי</mat-option>
-                  <mat-option [value]="1">רגיל </mat-option>
-                  <mat-option [value]="2">מוגבל </mat-option>
+                  <mat-option [value]=false>רגיל </mat-option>
+                  <mat-option [value]=true>מוגבל </mat-option>
                 </mat-select>
                 <mat-error *ngIf="hasError2('healthCondition', 'val')">{{bodyStructureFormGroup.controls['healthCondition'].errors['val']}}</mat-error>
               </mat-form-field>
@@ -422,10 +422,10 @@
               <mat-form-field class="demo-full-width">
                 <mat-select placeholder="מצב כלכלי" formControlName="economicSituation" [(value)]="economicSituation">
                   <mat-option>בחר מצב כלכלי</mat-option>
-                  <mat-option value="1"> גרוע</mat-option>
-                  <mat-option value="2">טוב</mat-option>
-                  <mat-option value="3">משופר </mat-option>
-                  <mat-option value="4">טוב מאוד </mat-option>
+                  <mat-option [value]="1"> גרוע</mat-option>
+                  <mat-option [value]="2">טוב</mat-option>
+                  <mat-option [value]="3">משופר </mat-option>
+                  <mat-option [value]="4">טוב מאוד </mat-option>
                 </mat-select>
                 <mat-error *ngIf="hasError4('economicSituation', 'val')">{{workFormGroup.controls['economicSituation'].errors['val']}}</mat-error>
               </mat-form-field>
