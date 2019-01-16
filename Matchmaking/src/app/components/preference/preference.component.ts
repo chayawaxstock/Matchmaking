@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Options } from 'ng5-slider';
 import { createValidatorEmail, createValidatorText, createValidatorBirthday, createValidatorNumber } from 'src/app/shared/validators/user-validators';
 import { Preference } from 'src/app/shared/models/preference';
+import { Community } from 'src/app/shared/models/community';
+import { Color } from 'src/app/shared/models/color';
 
 @Component({
   selector: 'app-preference',
@@ -22,8 +24,12 @@ export class PreferenceComponent implements OnInit {
     ceil: 100,
     step: 1,
     minLimit: 18,
-    maxLimit: 100
+    maxLimit: 100,
+    noSwitching: true,
+    showTicks: true
   };
+  seeHassidoot: boolean;
+  hassidoots: any;
 
   constructor(private _formBuilder: FormBuilder, private userService: UserService,private toastr: ToastrService
     ,private router:Router) {
@@ -31,6 +37,13 @@ export class PreferenceComponent implements OnInit {
   }
   ngOnInit() {
 
+    this.userService.allHassids().subscribe(data => {
+      console.log(data);
+      this.hassidoots = data;
+    },
+      err => {
+        this.hassidoots = []
+      });
    
     // communities:Community[]=[];
     // hassidoots:Hassid[]=[];
@@ -51,6 +64,9 @@ export class PreferenceComponent implements OnInit {
     }
     this.preferenceFormGroup = this._formBuilder.group({
       sliderControl: [[this.userService.user.preference.fromAge, this.userService.user.preference.tillAge]],
+      statuses:[[]],
+      communities:[[]],
+      hassidoots:[[]],
       skinColor:[this.userService.user.preference.skinColor],
       healthCondition:[this.userService.user.preference.healthCondition],
       spiritualStateInt:[this.userService.user.preference.spiritualStateInt],
@@ -80,6 +96,26 @@ export class PreferenceComponent implements OnInit {
     this.userService.user.preference=this.preferenceFormGroup.value;
     this.userService.user.preference.fromAge=this.preferenceFormGroup.value.sliderControl[0];
     this.userService.user.preference.tillAge=this.preferenceFormGroup.value.sliderControl[1];
+    this.userService.user.preference.skinColor=new Color();
+    this.userService.user.preference.skinColor.id=this.preferenceFormGroup.controls['skinColor'].value
+    this.userService.user.preference.statuses=[];
+    this.userService.user.preference.communities=[];
+    this.userService.user.preference.hassidoots=[];
+
+    this.preferenceFormGroup.controls['communities'].value.forEach(element => {
+      let com={id:element,CommunityName:''};
+      this.userService.user.preference.communities.push(com);
+    });
+
+    this.preferenceFormGroup.controls['statuses'].value.forEach(element => {
+      let com={id:element,status:''};
+      this.userService.user.preference.statuses.push(com);
+    });
+
+    this.preferenceFormGroup.controls['hassidoots'].value.forEach(element => {
+      let com={id:element,HassidootName:''};
+      this.userService.user.preference.hassidoots.push(com);
+    });
 
     this.userService.addToUserDetails(this.userService.user).subscribe(d => {
       this.toastr.success('הפרטים עדכנו בהצלחה', '', {
@@ -91,6 +127,24 @@ export class PreferenceComponent implements OnInit {
         timeOut: 2000
       });
     })
+  }
+
+  selectCommunity() {
+    let d=false;
+    this.preferenceFormGroup.controls['communities'].value.forEach(element => {
+      if(element==4)
+      {
+        this.seeHassidoot = true;
+        d=true;
+      } 
+    });
+  if(d==false)
+    this.seeHassidoot = false;
+  }
+
+  returnProfile()
+  {
+    this.router.navigate(['/profile'])
   }
 
 }

@@ -21,7 +21,7 @@ economicSituation:[''] -->
         <tr>
           <td colspan="4">
             <mat-form-field class="demo-full-width" style="visibility:hidden; ">
-              <input matInput placeholder="מגיל עד גיל" style="visibility: hidden; " >
+              <input matInput placeholder="מגיל עד גיל" style="visibility: hidden; ">
             </mat-form-field>
           </td>
         </tr>
@@ -46,6 +46,28 @@ economicSituation:[''] -->
               </mat-select>
             </mat-form-field>
           </td>
+          <td colspan="4">
+            <mat-form-field>
+              <mat-select placeholder="מצב משפחתי" formControlName="statuses" multiple>
+                <mat-option [value]="1"> רווק/ה</mat-option>
+                <mat-option [value]="2">אלמן/ה</mat-option>
+                <mat-option [value]="3">גרוש/ה</mat-option>
+                <mat-option [value]="4">גרוש כהן</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td colspan="4">
+            <mat-form-field>
+              <mat-select placeholder="עדות " formControlName="communities" multiple (selectionChange)="selectCommunity()">
+                <mat-option [value]="1"> אשכנזי/ה</mat-option>
+                <mat-option [value]="2">ספרדי/ה</mat-option>
+                <mat-option [value]="3"> תימני/ה</mat-option>
+                <mat-option [value]="4"> חסיד/ה</mat-option>
+                <mat-option [value]="5"> ליטאי/ה</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+
         </tr>
         <tr>
           <td colspan="4">
@@ -70,6 +92,15 @@ economicSituation:[''] -->
               </mat-select>
             </mat-form-field>
           </td>
+
+          <td colspan="4">
+              <mat-form-field class="demo-full-width" *ngIf="seeHassidoot&&hassidoots" >
+                  <mat-select placeholder="חסידות" formControlName="hassidoots" [(value)]="hassidoot" multiple>
+                    <mat-option>בחר חסידות </mat-option>
+                    <mat-option *ngFor="let hassid of hassidoots" [value]="hassid.id"> {{hassid.hassidootName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </td>
         </tr>
         <tr>
           <td colspan="4" style="padding-bottom: 20px;">
@@ -83,20 +114,25 @@ economicSituation:[''] -->
           <td colspan="4" style="padding-bottom: 20px;">
             <mat-slide-toggle formControlName="isInternet" color="primary"> אינטרנט </mat-slide-toggle>
           </td>
-          <td colspan="4" style="padding-bottom: 20px;">   
+          <td colspan="4" style="padding-bottom: 20px;">
             <mat-slide-toggle formControlName="isComputer" color="primary"> מחשב </mat-slide-toggle>
           </td>
         </tr>
         <tr>
-            <td colspan="8">
-                <label>מגיל עד גיל</label>
-              <ng5-slider [options]="options" formControlName="sliderControl"></ng5-slider>
-            </td>
+          <td colspan="8">
+            <div class="custom-slider">
+              <label>מגיל עד גיל</label>
+              <ng5-slider formControlName="sliderControl" [options]="options"></ng5-slider>
+            </div>
+          </td>
         </tr>
         <tr>
           <td colspan="2" class="content-center">
             <button mat-stroked-button color="primary" class="button-margin" (click)="add()">עדכון העדפות</button>
           </td>
+          <td colspan="2" class="content-center">
+              <button mat-stroked-button color="primary" class="button-margin" (click)="returnProfile()">חזרה לפרופיל האישי</button>
+            </td>
         </tr>
       </table>
     </form>
