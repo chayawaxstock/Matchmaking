@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 //import { TableData } from './table-data';
 
 import { ViewChild } from '@angular/core';
@@ -6,8 +6,10 @@ import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatDialogRef, Mat
 import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 import { filter } from 'rxjs/operators';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
-import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import { DialogPreferenceComponent } from '../dialog-preference/dialog-preference.component';
+import { Preference } from 'src/app/shared/models/preference';
+import { User } from 'src/app/shared/models/user';
 
 export interface UserData {
   id: string;
@@ -31,14 +33,14 @@ const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
 export class TableGirlComponent implements OnInit {
 
   deleteNameDialogRef: MatDialogRef<DialogDeleteComponent>;
-  displayedColumns: string[] = ['firstName', 'lastName', 'age', 'status', 'community1', 'preference', 'details', 'update', 'delete','match'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'age', 'status', 'community1', 'preference', 'update', 'delete','match'];
   dataSource: MatTableDataSource<UserData>;
-
+  @Input() dataGirl
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   users: any[];
-  DialogDetailComponent: MatDialogRef<DialogDetailComponent, any>;
   dialogEditUserComponent: MatDialogRef<DialogEditUserComponent, any>;
+  dialogPreperenceComponent: MatDialogRef<{}, any>;
 
   constructor(private dialog: MatDialog,private userService:UserService) {
     // Create 100 users
@@ -64,33 +66,7 @@ export class TableGirlComponent implements OnInit {
     }
   }
 
-  public redirectToDetails = (id: string) => {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    dialogConfig.data = {
-        id: id,
-        title: 'Angular For Beginners'
-    };
-
-    
-    this.DialogDetailComponent = this.dialog.open(DialogDetailComponent,dialogConfig);
-
-    this.DialogDetailComponent
-      .afterClosed()
-      .pipe(filter(name => name))
-      .subscribe(name => {
-
-        this.dataSource = new MatTableDataSource(this.users);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-
-        console.log({ name, content: '' })
-      });
-  }
-
+  
   public redirectTomatch = (id: string) => {
     console.log(id);
   }
@@ -112,6 +88,33 @@ export class TableGirlComponent implements OnInit {
     this.dialogEditUserComponent = this.dialog.open(DialogEditUserComponent,dialogConfig);
 
     this.dialogEditUserComponent
+      .afterClosed()
+      .pipe(filter(name => name))
+      .subscribe(name => {
+
+        this.dataSource = new MatTableDataSource(this.users);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        console.log({ name, content: '' })
+      });
+  }
+
+  public redirectToPreperence=(preference: Preference)=>{
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+        preference: preference,
+        title: 'Angular For Beginners'
+    };
+
+    
+    this.dialogPreperenceComponent = this.dialog.open(DialogPreferenceComponent,dialogConfig);
+
+    this.dialogPreperenceComponent
       .afterClosed()
       .pipe(filter(name => name))
       .subscribe(name => {

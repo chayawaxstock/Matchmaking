@@ -39,20 +39,11 @@
         <ng-container matColumnDef="preference">
           <th mat-header-cell *matHeaderCellDef> העדפות </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button style="color:cyan" (click)="redirectToDetails(element.id)">
+            <button mat-icon-button style="color:cyan" (click)="redirectToPreperence(element.preference)">
                 <mat-icon class="mat-18">how_to_reg</mat-icon>
             </button>
           </td>
         </ng-container> 
-    
-        <ng-container matColumnDef="details">
-          <th mat-header-cell *matHeaderCellDef> פרטים </th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" (click)="redirectToDetails(element.id)">
-                <mat-icon class="mat-18">description</mat-icon>
-            </button>
-          </td>
-        </ng-container>
        
         <ng-container matColumnDef="update">
             <th mat-header-cell *matHeaderCellDef> עדכון </th>
@@ -71,6 +62,15 @@
                 </button>
               </td>
             </ng-container>
+
+            <ng-container matColumnDef="match">
+                <th mat-header-cell *matHeaderCellDef> הצעות </th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button style="color:yellowgreen" (click)="redirectTomatch(element.id)">
+                      <mat-icon class="mat-18">thumb_up</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;">

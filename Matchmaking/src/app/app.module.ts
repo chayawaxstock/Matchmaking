@@ -31,10 +31,11 @@ import { TableSonComponent } from './components/table-son/table-son.component';
 import { DialogBodyComponent } from './components/dialog-body/dialog-body.component';
 import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
 import { DialogEditUserComponent } from './components/dialog-edit-user/dialog-edit-user.component';
-import { DialogDetailComponent } from './components/dialog-detail/dialog-detail.component';
 import { BarRatingModule } from "ngx-bar-rating";
 import { PreferenceComponent } from './components/preference/preference.component';
 import { Ng5SliderModule } from 'ng5-slider';
+
+import { DialogPreferenceComponent } from './components/dialog-preference/dialog-preference.component';
 
 @NgModule({
   declarations: [
@@ -52,8 +53,9 @@ import { Ng5SliderModule } from 'ng5-slider';
     DialogBodyComponent,
     DialogDeleteComponent,
     DialogEditUserComponent,
-    DialogDetailComponent,
+
     PreferenceComponent,
+    DialogPreferenceComponent,
 
   ],
   imports: [
@@ -110,6 +112,6 @@ import { Ng5SliderModule } from 'ng5-slider';
   ],
   providers: [AuthGuardService,UserService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogBodyComponent,DialogDeleteComponent,DialogEditUserComponent,DialogDetailComponent]
+  entryComponents: [DialogBodyComponent,DialogDeleteComponent,DialogEditUserComponent,DialogPreferenceComponent]
 })
 export class AppModule { }

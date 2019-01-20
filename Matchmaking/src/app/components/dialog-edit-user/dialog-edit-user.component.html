@@ -1,11 +1,5 @@
 <form (ngSubmit)="submit()" style="direction:rtl">
-  <h1 mat-dialog-title>מחיקה</h1>
   <mat-dialog-content>
-    {{description}}
- אתה בטוח שברצונך למחוק?
+   <app-new-user-profile></app-new-user-profile>
   </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button type="submit">אישור</button>
-    <button mat-button type="button" mat-dialog-close>ביטול</button>
-  </mat-dialog-actions>
 </form>

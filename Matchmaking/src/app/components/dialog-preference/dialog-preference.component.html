@@ -1,0 +1,33 @@
+
+
+<!-- id:number;
+
+communities:Community[]=[];
+hassidoots:Hassid[]=[];
+skinColor:Color;
+statuses:Status[]=[];
+healthCondition:boolean;
+spiritualStateInt:number;
+
+economicSituation:number;//מצב כלכלי -->
+
+<form (ngSubmit)="submit()" style="direction:rtl">
+    <h1 mat-dialog-title>העדפות</h1>
+    <mat-dialog-content>
+      <div>מגיל {{description.fromAge}}-עד גיל {{description.tillAge}}</div>
+      <div></div>
+
+      <div *ngIf="description.isSmoking==false">מעשן/ה  -אין</div>
+      <div *ngIf="description.isSmoking==true">מעשן/ה  -יש</div>
+      <div *ngIf="description.isComputer==false">יש מחשב -אין</div>
+      <div *ngIf="description.isComputer==true">יש מחשב -יש</div>
+      <div *ngIf="description.isDrivingLicense==false">נוהג/ת  -אין</div>
+      <div *ngIf="description.isDrivingLicense==true">נוהג/ת  -יש</div>
+      <div *ngIf="description.isInternet==false">יש אינטרנט -אין</div>
+      <div *ngIf="description.isInternet==true">יש אינטרנט -יש</div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button type="submit">אישור</button>
+    </mat-dialog-actions>
+  </form>
