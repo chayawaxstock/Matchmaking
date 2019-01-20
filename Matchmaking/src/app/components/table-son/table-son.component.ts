@@ -6,19 +6,19 @@ import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatDialogRef, Mat
 import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 import { filter } from 'rxjs/operators';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import { UserService } from 'src/app/shared/services/user.service';
+import { Status } from 'src/app/shared/models/status';
+import { Community } from 'src/app/shared/models/community';
 
 export interface UserData {
   id: string;
   firstName: string;
   lastName: string;
   age: number;
-  status: string;
-  community1: string;
+  status: Status;
+  community1: Community;
 }
 
-/** Constants used to fill up our data base. */
-const COLORS: string[] = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
 const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
   'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
   'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
@@ -40,17 +40,22 @@ export class TableSonComponent implements OnInit {
   users: any[];
   dialogEditUserComponent: MatDialogRef<DialogEditUserComponent, any>;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,private userService:UserService) {
     // Create 100 users
-    this.users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
+   
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.users);
+    this.userService.getMan().subscribe(p=>{
+      this.users=p;
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.paginator = this.paginator;
+       this.dataSource.sort = this.sort;
+       
+    });
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+   
+   
   }
 
   applyFilter(filterValue: string) {
@@ -126,21 +131,3 @@ export class TableSonComponent implements OnInit {
   }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    firstName: name,
-    lastName: Math.round(Math.random() * 100).toString(),
-    age: 29,
-    status: 'רווק',
-    community1: 'לטאי'
-  };
-
-
-
-}

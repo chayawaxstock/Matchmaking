@@ -7,6 +7,7 @@ import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component'
 import { filter } from 'rxjs/operators';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
+import { UserService } from 'src/app/shared/services/user.service';
 
 export interface UserData {
   id: string;
@@ -17,9 +18,6 @@ export interface UserData {
   community1: string;
 }
 
-/** Constants used to fill up our data base. */
-const COLORS: string[] = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
 const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
   'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
   'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
@@ -42,10 +40,12 @@ export class TableGirlComponent implements OnInit {
   DialogDetailComponent: MatDialogRef<DialogDetailComponent, any>;
   dialogEditUserComponent: MatDialogRef<DialogEditUserComponent, any>;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,private userService:UserService) {
     // Create 100 users
-    this.users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
+    this.userService.getFeman()
+    .subscribe(p=>{
+      this.users=p;
+    });
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.users);
   }

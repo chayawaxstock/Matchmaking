@@ -9,6 +9,7 @@ import { cities } from '../models/cities';
 })
 export class UserService {
  
+ 
   logOut:Subject<boolean>=new Subject();
   baseUrl:string="http://localhost:65448/api/";
   users:User[];
@@ -41,6 +42,12 @@ export class UserService {
   {
   return this.http.get(this.baseUrl+"getAllCityies");
   }
+  getMan(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl+"getAllMan");
+  }
 
+  getFeman(): Observable<User[]>  {
+    return this.http.get<User[]>(this.baseUrl+"getAllFeman");
+  }
 
 }
