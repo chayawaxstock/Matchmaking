@@ -47,8 +47,8 @@ export class NewUserProfileComponent implements OnInit {
   recomend1: Recommend = new Recommend();
   recomend2: Recommend = new Recommend();
   recomend3: Recommend = new Recommend();
-  constructor(private _formBuilder: FormBuilder, private userService: UserService,private toastr: ToastrService
-    ,private router:Router) {
+  constructor(private _formBuilder: FormBuilder, private userService: UserService, private toastr: ToastrService
+    , private router: Router) {
     this.recomend1 = new Recommend();
     this.recomend2 = new Recommend();
     this.recomend3 = new Recommend();
@@ -71,37 +71,41 @@ export class NewUserProfileComponent implements OnInit {
         this.cities = []
       });
 
+      this.user = this.userService.currentUser;
+    if (this.userService.currentUser.isAdmin == true) {
+      this.userService.currentUser = this.userService.helperUser;
+    }
 
-    this.user = JSON.parse(localStorage.getItem('user'));
-    if (this.user.community1.id == 4 || this.user.community2.id == 4)
+
+    if (this.userService.currentUser.community1.id == 4 || this.userService.currentUser.community2.id == 4)
       this.seeHassidoot = true;
-    if (this.user.gender == 1)
+    if (this.userService.currentUser.gender == 1)
       this.desplayMan = true;
     else this.desplayMan = false;
     this.selected = 1;
 
-    if (this.user.recommends.length > 0)
-      this.recomend1 = this.user.recommends[0];
-    else this.user.recommends.push(new Recommend());
-    if (this.user.recommends.length > 1)
-      this.recomend2 = this.user.recommends[1];
-    else this.user.recommends.push(new Recommend());
-    if (this.user.recommends.length > 2)
-      this.recomend3 = this.user.recommends[2];
-    else this.user.recommends.push(new Recommend());
+    if (this.userService.currentUser.recommends.length > 0)
+      this.recomend1 = this.userService.currentUser.recommends[0];
+    else this.userService.currentUser.recommends.push(new Recommend());
+    if (this.userService.currentUser.recommends.length > 1)
+      this.recomend2 = this.userService.currentUser.recommends[1];
+    else this.userService.currentUser.recommends.push(new Recommend());
+    if (this.userService.currentUser.recommends.length > 2)
+      this.recomend3 = this.userService.currentUser.recommends[2];
+    else this.userService.currentUser.recommends.push(new Recommend());
 
 
     this.userFormGroup = this._formBuilder.group({
-      email: [this.user.email, createValidatorEmail("מייל", 2, 30, this.emailPattern)],
-      phone: [this.user.phone, createValidatorText('פלאפון', 10, 10, /^[0-9]+$/)],
-      tel: [this.user.tel, createValidatorText('טלפון', 7, 10, /^[0-9]+$/)],
-      city: [this.user.city.id, Validators.required],
-      firstName: [this.user.firstName, createValidatorText("שם פרטי", 2, 15)],
-      lastName: [this.user.lastName, createValidatorText("שם משפחה", 2, 15)],
-      address: [this.user.address, createValidatorText("כתובת", 2, 30)],
-      brithday: [this.user.brithday, createValidatorBirthday('תאריך לידה')],
-      age: [this.user.age],
-      gender: [this.user.gender]
+      email: [this.userService.currentUser.email, createValidatorEmail("מייל", 2, 30, this.emailPattern)],
+      phone: [this.userService.currentUser.phone, createValidatorText('פלאפון', 10, 10, /^[0-9]+$/)],
+      tel: [this.userService.currentUser.tel, createValidatorText('טלפון', 7, 10, /^[0-9]+$/)],
+      city: [this.userService.currentUser.city.id, Validators.required],
+      firstName: [this.userService.currentUser.firstName, createValidatorText("שם פרטי", 2, 15)],
+      lastName: [this.userService.currentUser.lastName, createValidatorText("שם משפחה", 2, 15)],
+      address: [this.userService.currentUser.address, createValidatorText("כתובת", 2, 30)],
+      brithday: [this.userService.currentUser.brithday, createValidatorBirthday('תאריך לידה')],
+      age: [this.userService.currentUser.age],
+      gender: [this.userService.currentUser.gender]
     });
 
 
@@ -114,12 +118,12 @@ export class NewUserProfileComponent implements OnInit {
     healthCondition:boolean;//מצב בריאותי */
 
     this.bodyStructureFormGroup = this._formBuilder.group({
-      bodyStructure: [this.user.bodyStructure.bodyStructureContent, createValidatorText("תאור מבנה גוף", 2, 200)],
-      height: [this.user.bodyStructure.height, createValidatorNumber('גובה', 120, 210)],
-      colorHair: [this.user.bodyStructure.colorHair.id, Validators.required],
-      beard: [this.user.bodyStructure.beard],
-      colorSkin: [this.user.bodyStructure.colorSkin.id],
-      healthCondition: [this.user.bodyStructure.healthCondition],
+      bodyStructure: [this.userService.currentUser.bodyStructure.bodyStructureContent, createValidatorText("תאור מבנה גוף", 2, 200)],
+      height: [this.userService.currentUser.bodyStructure.height, createValidatorNumber('גובה', 120, 210)],
+      colorHair: [this.userService.currentUser.bodyStructure.colorHair.id, Validators.required],
+      beard: [this.userService.currentUser.bodyStructure.beard],
+      colorSkin: [this.userService.currentUser.bodyStructure.colorSkin.id],
+      healthCondition: [this.userService.currentUser.bodyStructure.healthCondition],
     });
 
     // spiritualState:number;
@@ -132,13 +136,13 @@ export class NewUserProfileComponent implements OnInit {
     // nameInstitution:string;
 
     this.spiritualStateFormGroup = this._formBuilder.group({
-      spiritualState: [this.user.spiritualState.spiritualStateInt],
-      isDrivingLicense: [this.user.spiritualState.isDrivingLicense],
-      skullcap: [this.user.spiritualState.skullcap, Validators.required],
-      isComputer: [this.user.spiritualState.isComputer],
-      isInternet: [this.user.spiritualState.isInternet],
-      isSmoking: [this.user.spiritualState.isSmoking],
-      nameInstitution: [this.user.spiritualState.nameInstitution, createValidatorText('שם מסגרת תורנית', 2, 20)]
+      spiritualState: [this.userService.currentUser.spiritualState.spiritualStateInt],
+      isDrivingLicense: [this.userService.currentUser.spiritualState.isDrivingLicense],
+      skullcap: [this.userService.currentUser.spiritualState.skullcap, Validators.required],
+      isComputer: [this.userService.currentUser.spiritualState.isComputer],
+      isInternet: [this.userService.currentUser.spiritualState.isInternet],
+      isSmoking: [this.userService.currentUser.spiritualState.isSmoking],
+      nameInstitution: [this.userService.currentUser.spiritualState.nameInstitution, createValidatorText('שם מסגרת תורנית', 2, 20)]
     });
 
 
@@ -148,27 +152,24 @@ export class NewUserProfileComponent implements OnInit {
     // economicSituation:number;//מצב כלכלי כוכביות
 
     this.workFormGroup = this._formBuilder.group({
-      statusWork: [this.user.work.statusWork],
-      nameWork: [this.user.work.nameWork, createValidatorText('מקום עבודה', 2, 20)],
-      experience: [this.user.work.experience, createValidatorNumberNotRequired('שנות וותק', 0, 50)],
-      economicSituation: [this.user.work.economicSituation, createValidatorNumberNotRequired('מצב כלכלי', 0, 5)]//מצב כלכלי כוכביות
+      statusWork: [this.userService.currentUser.work.statusWork],
+      nameWork: [this.userService.currentUser.work.nameWork, createValidatorText('מקום עבודה', 2, 20)],
+      experience: [this.userService.currentUser.work.experience, createValidatorNumberNotRequired('שנות וותק', 0, 50)],
+      economicSituation: [this.userService.currentUser.work.economicSituation, createValidatorNumberNotRequired('מצב כלכלי', 0, 5)]//מצב כלכלי כוכביות
     });
 
 
     // hassidoot:Hassid;
     // recomends:Recomends;//ממליצים
     this.moreDetailsFormGroup = this._formBuilder.group({
-      numChildren: [this.user.numChildren, createValidatorNumberNotRequired('מספר ילדים ', -1, 22)],
-      status: [this.user.status.id, Validators.required],
-      isChildrenInHisCare: [this.user.isChildrenInHisCare],
-      community1: [this.user.community1.id, Validators.required],
-      community2: [this.user.community2.id],
-      hassidoot: [this.user.hassidoot],
+      numChildren: [this.userService.currentUser.numChildren, createValidatorNumberNotRequired('מספר ילדים ', -1, 22)],
+      status: [this.userService.currentUser.status.id, Validators.required],
+      isChildrenInHisCare: [this.userService.currentUser.isChildrenInHisCare],
+      community1: [this.userService.currentUser.community1.id, Validators.required],
+      community2: [this.userService.currentUser.community2.id],
+      hassidoot: [this.userService.currentUser.hassidoot],
 
     });
-
-
-
 
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -195,86 +196,62 @@ export class NewUserProfileComponent implements OnInit {
     return this.moreDetailsFormGroup.controls[controlName].hasError(errorName);
   }
   addUser1() {
-    this.user.email = this.userFormGroup.controls['email'].value;
-    this.user.phone = this.userFormGroup.controls['phone'].value;
-    this.user.tel = this.userFormGroup.controls['tel'].value;
-    this.user.city = new City();
-    this.user.city.id = this.userFormGroup.controls['city'].value;
-    this.user.firstName = this.userFormGroup.controls['firstName'].value;
-    this.user.lastName = this.userFormGroup.controls['lastName'].value;
-    this.user.address = this.userFormGroup.controls['address'].value;
-    this.user.brithday = this.userFormGroup.controls['brithday'].value;
-    this.user.age = this.userFormGroup.controls['age'].value;
-    this.user.gender = this.userFormGroup.controls['gender'].value;
-
-    localStorage.removeItem('user');
-    localStorage.setItem('user', JSON.stringify(this.user));
+    this.userService.currentUser.email = this.userFormGroup.controls['email'].value;
+    this.userService.currentUser.phone = this.userFormGroup.controls['phone'].value;
+    this.userService.currentUser.tel = this.userFormGroup.controls['tel'].value;
+    this.userService.currentUser.city = new City();
+    this.userService.currentUser.city.id = this.userFormGroup.controls['city'].value;
+    this.userService.currentUser.firstName = this.userFormGroup.controls['firstName'].value;
+    this.userService.currentUser.lastName = this.userFormGroup.controls['lastName'].value;
+    this.userService.currentUser.address = this.userFormGroup.controls['address'].value;
+    this.userService.currentUser.brithday = this.userFormGroup.controls['brithday'].value;
+    this.userService.currentUser.age = this.userFormGroup.controls['age'].value;
+    this.userService.currentUser.gender = this.userFormGroup.controls['gender'].value;
   }
 
-  // addUser() {
-  //   console.log(this.userFormGroup.controls);
-  // }
 
   addUserDetails() {
 
-    this.user.status=new Status();
-    this.user.status.id=Number(this.moreDetailsFormGroup.controls['status'].value);
-    this.user.numChildren = this.moreDetailsFormGroup.controls['numChildren'].value;
-    this.user.isChildrenInHisCare = this.moreDetailsFormGroup.controls['isChildrenInHisCare'].value;
-    this.user.community1=new Community();
-    this.user.community1.id = this.moreDetailsFormGroup.controls['community1'].value;
-    this.user.community2=new Community();
-    this.user.community2.id = this.moreDetailsFormGroup.controls['community2'].value;
-    this.user.hassidoot = this.moreDetailsFormGroup.controls['hassidoot'].value;
-    // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends1'].value);
-    // this.user.recomends.push(this.moreDetailsFormGroup.controls['recomends2'].value);
-
-    localStorage.removeItem('user');
-    localStorage.setItem('user', JSON.stringify(this.user));
+    this.userService.currentUser.status = new Status();
+    this.userService.currentUser.status.id = Number(this.moreDetailsFormGroup.controls['status'].value);
+    this.userService.currentUser.numChildren = this.moreDetailsFormGroup.controls['numChildren'].value;
+    this.userService.currentUser.isChildrenInHisCare = this.moreDetailsFormGroup.controls['isChildrenInHisCare'].value;
+    this.userService.currentUser.community1 = new Community();
+    this.userService.currentUser.community1.id = this.moreDetailsFormGroup.controls['community1'].value;
+    this.userService.currentUser.community2 = new Community();
+    this.userService.currentUser.community2.id = this.moreDetailsFormGroup.controls['community2'].value;
+    this.userService.currentUser.hassidoot = this.moreDetailsFormGroup.controls['hassidoot'].value;
   }
 
 
   bodySAdd() {
- 
-    this.user.bodyStructure = this.bodyStructureFormGroup.value;
-    this.user.bodyStructure.bodyStructureContent=this.bodyStructureFormGroup.controls['bodyStructure'].value;
-    this.user.bodyStructure.colorHair = new Color();
-  
-    this.user.bodyStructure.colorHair.id = Number(this.bodyStructureFormGroup.controls['colorHair'].value);
-    this.user.bodyStructure.colorSkin=new Color();
-    this.user.bodyStructure.colorSkin.id = Number(this.bodyStructureFormGroup.controls['colorSkin'].value);
 
-    localStorage.removeItem('user');
-    localStorage.setItem('user', JSON.stringify(this.user));
+    this.userService.currentUser.bodyStructure = this.bodyStructureFormGroup.value;
+    this.userService.currentUser.bodyStructure.bodyStructureContent = this.bodyStructureFormGroup.controls['bodyStructure'].value;
+    this.userService.currentUser.bodyStructure.colorHair = new Color();
+
+    this.userService.currentUser.bodyStructure.colorHair.id = Number(this.bodyStructureFormGroup.controls['colorHair'].value);
+    this.userService.currentUser.bodyStructure.colorSkin = new Color();
+    this.userService.currentUser.bodyStructure.colorSkin.id = Number(this.bodyStructureFormGroup.controls['colorSkin'].value);
   }
 
   spiritualStateAdd() {
-    this.user.spiritualState = this.spiritualStateFormGroup.value;
-    this.user.spiritualState.spiritualStateInt=this.spiritualStateFormGroup.controls['spiritualState'].value;
-
-    localStorage.removeItem('user');
-    localStorage.setItem('user', JSON.stringify(this.user));
+    this.userService.currentUser.spiritualState = this.spiritualStateFormGroup.value;
+    this.userService.currentUser.spiritualState.spiritualStateInt = this.spiritualStateFormGroup.controls['spiritualState'].value;
   }
 
   workAdd() {
-    this.user.work = this.workFormGroup.value;
+    this.userService.currentUser.work = this.workFormGroup.value;
 
-    localStorage.removeItem('user');
-    localStorage.setItem('user', JSON.stringify(this.user));
-  }
-
-  changeAge() {
-    this.age = new Date().getFullYear() - new Date(this.userFormGroup.controls['brithday'].value).getFullYear();
   }
 
   add() {
-    this.userService.addToUserDetails(this.user).subscribe(d => {
-      this.userService.user=this.user;
+    this.userService.addToUserDetails(this.userService.currentUser).subscribe(d => {
       this.toastr.success('הפרטים עדכנו בהצלחה', '', {
         timeOut: 2000
       });
       this.router.navigate(['/preferences'])
-    },err=>{
+    }, err => {
       this.toastr.error('עדכון הפרטים נכשל', '', {
         timeOut: 2000
       });
@@ -294,7 +271,7 @@ export class NewUserProfileComponent implements OnInit {
   }
 
   changeStatus() {
-  
+
     if (this.moreDetailsFormGroup.controls['status'].value != 1) {
       this.seenumChildren = true;
     }
@@ -309,10 +286,24 @@ export class NewUserProfileComponent implements OnInit {
   }
 
   addRec() {
-    this.user.recommends =[];
-    this.user.recommends.push(this.recomend1);
-    this.user.recommends.push(this.recomend2);
-    this.user.recommends.push(this.recomend3);
+    this.userService.currentUser.recommends = [];
+    this.userService.currentUser.recommends.push(this.recomend1);
+    this.userService.currentUser.recommends.push(this.recomend2);
+    this.userService.currentUser.recommends.push(this.recomend3);
+  }
+
+  addManager() {
+    this.userService.addToUserDetails(this.userService.currentUser).subscribe(d => {
+      this.userService.currentUser=this.user;
+      this.toastr.success('הפרטים עדכנו בהצלחה', '', {
+        timeOut: 2000
+      });
+      this.router.navigate(['/admin'])
+    }, err => {
+      this.toastr.error('עדכון הפרטים נכשל', '', {
+        timeOut: 2000
+      });
+    })
   }
 
 }

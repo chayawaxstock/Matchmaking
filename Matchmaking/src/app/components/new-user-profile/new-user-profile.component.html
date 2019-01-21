@@ -1,5 +1,5 @@
 
-<mat-card class="mat-card" dir="rtl">
+<mat-card  [ngClass]="{'mat-card1':user.isAdmin==false}"  dir="rtl">
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="userFormGroup">
       <ng-template matStepLabel> פרטים בסיסים</ng-template>
@@ -444,11 +444,12 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>סיום ואישור</ng-template>
-      אתה מאשר את פרטי ההצטרפות למאגר הרשומות המקרה שיהיה התאמה השדכנית תעדכן אותך
+      <p *ngIf="user.isAdmin==false"> אתה מאשר את פרטי ההצטרפות למאגר הרשומות המקרה שיהיה התאמה השדכנית תעדכן אותך</p>     
       <div>
         <button mat-stroked-button color="primary" class="button-margin" matStepperPrevious>חזרה</button>
         <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
-        <button mat-stroked-button color="primary" class="button-margin" (click)="add()"> אישור ומעבר לעדיפות</button>
+        <button *ngIf="user.isAdmin==false;" mat-stroked-button color="primary" class="button-margin" (click)="add()"> אישור ומעבר לעדיפות</button>
+        <button *ngIf="user.isAdmin==true;" mat-stroked-button color="primary" class="button-margin" (click)="add()"> שמירה</button>
       </div>
     </mat-step>
 

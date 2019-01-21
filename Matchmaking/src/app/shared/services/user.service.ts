@@ -10,12 +10,14 @@ import { cities } from '../models/cities';
 export class UserService {
  
  
+  matchSubject:Subject<User[]>=new Subject<User[]>();
   logOut:Subject<boolean>=new Subject();
   baseUrl:string="http://localhost:65448/api/";
   users:User[];
   addUserDetails:number=0;
   newUser:User;
-  user: User;
+  currentUser: User;
+  helperUser: User;
   constructor(public http:HttpClient) { }
 
 
@@ -33,6 +35,10 @@ export class UserService {
     return this.http.post(this.baseUrl+"login",values);
   }
 
+  loginByPassword(pass:string): Observable<any> {
+    return this.http.post(this.baseUrl+"loginByPassword",pass);
+  }
+
   loadCities():Observable<any>
   {
   return this.http.post(this.baseUrl+"loadCities",cities);
@@ -48,6 +54,10 @@ export class UserService {
 
   getFeman(): Observable<User[]>  {
     return this.http.get<User[]>(this.baseUrl+"getAllFeman");
+  }
+
+  getMatch(user:User): Observable<User[]> {
+    return this.http.post<User[]>(this.baseUrl+"getMatch",user);
   }
 
 }

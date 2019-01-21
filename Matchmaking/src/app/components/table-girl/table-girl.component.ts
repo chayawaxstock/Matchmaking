@@ -47,14 +47,20 @@ export class TableGirlComponent implements OnInit {
     this.userService.getFeman()
     .subscribe(p=>{
       this.users=p;
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.paginator = this.paginator;
+       this.dataSource.sort = this.sort;
+       
     });
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.users);
   }
 
   ngOnInit() {
+   this.userService.matchSubject.subscribe(data=>{
+    this.users=data;
+    this.dataSource = new MatTableDataSource(this.users);
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+     this.dataSource.sort = this.sort;
+   })
   }
 
   applyFilter(filterValue: string) {
@@ -67,12 +73,14 @@ export class TableGirlComponent implements OnInit {
   }
 
   
-  public redirectTomatch = (id: string) => {
-    console.log(id);
+  public redirectTomatch = (user: User) => {
+    this.userService.getMatch(user).subscribe(
+      data=>{
+      this.userService.matchSubject.next(data);
+    })
   }
 
-
-  public redirectToUpdate = (id: string) => {  
+  public redirectToUpdate = (user: User) => {  
 
     const dialogConfig = new MatDialogConfig();
 
@@ -80,8 +88,7 @@ export class TableGirlComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-        id: id,
-        title: 'Angular For Beginners'
+        user: user,
     };
 
     

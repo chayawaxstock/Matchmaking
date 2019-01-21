@@ -59,9 +59,13 @@ export class TableSonComponent implements OnInit {
   }
 
   ngOnInit() {
-   
-   
-  }
+    this.userService.matchSubject.subscribe(data=>{
+     this.users=data;
+     this.dataSource = new MatTableDataSource(this.users);
+     this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
+   }
 
   applyFilter(filterValue: string) {
 
@@ -73,8 +77,11 @@ export class TableSonComponent implements OnInit {
   }
 
 
-  public redirectTomatch = (id: string) => {
-    console.log(id);
+  public redirectTomatch = (user: User) => {
+    this.userService.getMatch(user).subscribe(
+      data=>{
+      this.userService.matchSubject.next(data);
+    })
   }
 
   public redirectToPreperence=(preference: Preference)=>{
@@ -105,7 +112,7 @@ export class TableSonComponent implements OnInit {
   }
 
 
-  public redirectToUpdate = (id: string) => {  
+  public redirectToUpdate = (user: User) => {  
 
     const dialogConfig = new MatDialogConfig();
 
@@ -113,8 +120,7 @@ export class TableSonComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-        id: id,
-        title: 'Angular For Beginners'
+        user: user,   
     };
 
     

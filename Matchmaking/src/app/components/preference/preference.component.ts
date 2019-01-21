@@ -56,25 +56,25 @@ export class PreferenceComponent implements OnInit {
     // isSmoking:boolean;
     // isInternet:boolean;
     // economicSituation:number;//מצב כלכלי
-    if(this.userService.user.preference==null||this.userService.user.preference==undefined)
+    if(this.userService.currentUser.preference==null||this.userService.currentUser.preference==undefined)
     {
-      this.userService.user.preference=new Preference();
-      this.userService.user.preference.fromAge=18;
-      this.userService.user.preference.tillAge=100;
+      this.userService.currentUser.preference=new Preference();
+      this.userService.currentUser.preference.fromAge=18;
+      this.userService.currentUser.preference.tillAge=100;
     }
     this.preferenceFormGroup = this._formBuilder.group({
-      sliderControl: [[this.userService.user.preference.fromAge, this.userService.user.preference.tillAge]],
+      sliderControl: [[this.userService.currentUser.preference.fromAge, this.userService.currentUser.preference.tillAge]],
       statuses:[[]],
       communities:[[]],
       hassidoots:[[]],
-      skinColor:[this.userService.user.preference.skinColor],
-      healthCondition:[this.userService.user.preference.healthCondition],
-      spiritualStateInt:[this.userService.user.preference.spiritualStateInt],
-      isDrivingLicense:[this.userService.user.preference.isDrivingLicense],
-      isComputer:[this.userService.user.preference.isComputer],
-      isSmoking:[this.userService.user.preference.isSmoking],
-      isInternet:[this.userService.user.preference.isInternet],
-      economicSituation:[this.userService.user.preference.economicSituation]
+      skinColor:[this.userService.currentUser.preference.skinColor],
+      healthCondition:[this.userService.currentUser.preference.healthCondition],
+      spiritualStateInt:[this.userService.currentUser.preference.spiritualStateInt],
+      isDrivingLicense:[this.userService.currentUser.preference.isDrivingLicense],
+      isComputer:[this.userService.currentUser.preference.isComputer],
+      isSmoking:[this.userService.currentUser.preference.isSmoking],
+      isInternet:[this.userService.currentUser.preference.isInternet],
+      economicSituation:[this.userService.currentUser.preference.economicSituation]
     });
   }
 
@@ -93,31 +93,31 @@ export class PreferenceComponent implements OnInit {
     // isInternet:boolean;
     // economicSituation:number;//מצב כלכלי
 
-    this.userService.user.preference=this.preferenceFormGroup.value;
-    this.userService.user.preference.fromAge=this.preferenceFormGroup.value.sliderControl[0];
-    this.userService.user.preference.tillAge=this.preferenceFormGroup.value.sliderControl[1];
-    this.userService.user.preference.skinColor=new Color();
-    this.userService.user.preference.skinColor.id=this.preferenceFormGroup.controls['skinColor'].value
-    this.userService.user.preference.statuses=[];
-    this.userService.user.preference.communities=[];
-    this.userService.user.preference.hassidoots=[];
+    this.userService.currentUser.preference=this.preferenceFormGroup.value;
+    this.userService.currentUser.preference.fromAge=this.preferenceFormGroup.value.sliderControl[0];
+    this.userService.currentUser.preference.tillAge=this.preferenceFormGroup.value.sliderControl[1];
+    this.userService.currentUser.preference.skinColor=new Color();
+    this.userService.currentUser.preference.skinColor.id=this.preferenceFormGroup.controls['skinColor'].value
+    this.userService.currentUser.preference.statuses=[];
+    this.userService.currentUser.preference.communities=[];
+    this.userService.currentUser.preference.hassidoots=[];
 
     this.preferenceFormGroup.controls['communities'].value.forEach(element => {
       let com={id:element,CommunityName:''};
-      this.userService.user.preference.communities.push(com);
+      this.userService.currentUser.preference.communities.push(com);
     });
 
     this.preferenceFormGroup.controls['statuses'].value.forEach(element => {
       let com={id:element,status:''};
-      this.userService.user.preference.statuses.push(com);
+      this.userService.currentUser.preference.statuses.push(com);
     });
 
     this.preferenceFormGroup.controls['hassidoots'].value.forEach(element => {
       let com={id:element,HassidootName:''};
-      this.userService.user.preference.hassidoots.push(com);
+      this.userService.currentUser.preference.hassidoots.push(com);
     });
 
-    this.userService.addToUserDetails(this.userService.user).subscribe(d => {
+    this.userService.addToUserDetails(this.userService.currentUser).subscribe(d => {
       this.toastr.success('הפרטים עדכנו בהצלחה', '', {
         timeOut: 2000
       });

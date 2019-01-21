@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
   login() {
     this.userService.login(this.loginFormGroup.value).subscribe(data => {
 
-      localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data['password']));
+      this.userService.currentUser=data;
       this.showSuccess(data['userName']);
       this.userService.logOut.next(true);
       if (data['isAdmin'] == true)
@@ -42,7 +43,6 @@ export class LoginComponent implements OnInit {
       else this.router.navigate(['profile']);
     }, err => {
       this.showError();
-
     });
   }
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { Preference } from 'src/app/shared/models/preference';
 
 @Component({

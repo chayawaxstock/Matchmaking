@@ -43,7 +43,7 @@ export class DialogEditUserComponent implements OnInit {
   recomend2: Recommend = new Recommend();
   recomend3: Recommend = new Recommend();
   form: FormGroup;
-  description: string;
+ 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,7 +57,8 @@ export class DialogEditUserComponent implements OnInit {
     this.recomend1 = new Recommend();
     this.recomend2 = new Recommend();
     this.recomend3 = new Recommend();
-    this.description = data.id;
+
+    this.userService.helperUser=data.user;
   }
 
   ngOnInit() {
