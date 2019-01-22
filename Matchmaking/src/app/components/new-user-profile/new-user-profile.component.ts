@@ -246,6 +246,7 @@ export class NewUserProfileComponent implements OnInit {
   }
 
   add() {
+    debugger;
     this.userService.addToUserDetails(this.userService.currentUser).subscribe(d => {
       this.toastr.success('הפרטים עדכנו בהצלחה', '', {
         timeOut: 2000
@@ -293,6 +294,7 @@ export class NewUserProfileComponent implements OnInit {
   }
 
   addManager() {
+    debugger;
     this.userService.addToUserDetails(this.userService.currentUser).subscribe(d => {
       this.userService.currentUser=this.user;
       this.toastr.success('הפרטים עדכנו בהצלחה', '', {

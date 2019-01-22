@@ -48,6 +48,7 @@ export class UserService {
   {
   return this.http.get(this.baseUrl+"getAllCityies");
   }
+
   getMan(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl+"getAllMan");
   }
@@ -56,7 +57,12 @@ export class UserService {
     return this.http.get<User[]>(this.baseUrl+"getAllFeman");
   }
 
+  getUsers(): Observable<User[]>  {
+    return this.http.get<User[]>(this.baseUrl+"getAllUsers");
+  }
+
   getMatch(user:User): Observable<User[]> {
+    debugger;
     return this.http.post<User[]>(this.baseUrl+"getMatch",user);
   }
 

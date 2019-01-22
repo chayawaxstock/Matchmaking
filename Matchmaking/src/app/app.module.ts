@@ -1,16 +1,29 @@
+import { CommonModule } from '@angular/common';
+import { A11yModule } from '@angular/cdk/a11y';
+import { BidiModule } from '@angular/cdk/bidi';
+import { ObserversModule } from '@angular/cdk/observers';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PlatformModule } from '@angular/cdk/platform';
+import { PortalModule } from '@angular/cdk/portal';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { CdkTreeModule } from '@angular/cdk/tree';
+
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { AgGridModule } from 'ag-grid-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewUserProfileComponent } from './components/new-user-profile/new-user-profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule,MatStepperModule,MatFormFieldModule, MatAutocompleteModule, MatButtonToggleModule, MatCardModule, 
+import {
+  MatButtonModule, MatCheckboxModule, MatStepperModule, MatFormFieldModule, MatAutocompleteModule, MatButtonToggleModule, MatCardModule,
   MatChipsModule, MatDatepickerModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatGridListModule, MatIconModule, MatInputModule,
-   MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule,
-    MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
-     MatToolbarModule, MatTooltipModule} 
-     from '@angular/material';
+  MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule,
+  MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
+  MatToolbarModule, MatTooltipModule
+}
+  from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
@@ -36,6 +49,11 @@ import { PreferenceComponent } from './components/preference/preference.componen
 import { Ng5SliderModule } from 'ng5-slider';
 
 import { DialogPreferenceComponent } from './components/dialog-preference/dialog-preference.component';
+import { GridModule } from '@progress/kendo-angular-grid';
+import { TableUserComponent } from './components/table-user/table-user.component';
+import { TableMatchComponent } from './components/table-match/table-match.component';
+import { CdkDetailRowDirective } from './components/cdk-detail-row.directive';
+
 
 @NgModule({
   declarations: [
@@ -56,6 +74,10 @@ import { DialogPreferenceComponent } from './components/dialog-preference/dialog
 
     PreferenceComponent,
     DialogPreferenceComponent,
+    TableUserComponent,
+    TableMatchComponent,
+    CdkDetailRowDirective,
+ 
 
   ],
   imports: [
@@ -108,10 +130,23 @@ import { DialogPreferenceComponent } from './components/dialog-preference/dialog
     HttpClientModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),// ToastrModule added
-    Ng5SliderModule,
+    Ng5SliderModule, GridModule,
+    AgGridModule.withComponents([]),
+
+    // CDK
+    A11yModule,
+    BidiModule,
+    ObserversModule,
+    OverlayModule,
+    PlatformModule,
+    PortalModule,
+    ScrollDispatchModule,
+    CdkStepperModule,
+    CdkTableModule,
+    CdkTreeModule,
   ],
-  providers: [AuthGuardService,UserService],
+  providers: [AuthGuardService, UserService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogBodyComponent,DialogDeleteComponent,DialogEditUserComponent,DialogPreferenceComponent]
+  entryComponents: [DialogBodyComponent, DialogDeleteComponent, DialogEditUserComponent, DialogPreferenceComponent]
 })
 export class AppModule { }

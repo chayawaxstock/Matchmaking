@@ -13,3 +13,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 // if you'd like to use it without importing all of bootstrap it requires
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";

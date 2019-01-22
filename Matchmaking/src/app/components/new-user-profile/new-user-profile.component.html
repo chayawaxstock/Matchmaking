@@ -449,7 +449,7 @@
         <button mat-stroked-button color="primary" class="button-margin" matStepperPrevious>חזרה</button>
         <button mat-stroked-button color="primary" class="button-margin" (click)="stepper.reset()">אפס</button>
         <button *ngIf="user.isAdmin==false;" mat-stroked-button color="primary" class="button-margin" (click)="add()"> אישור ומעבר לעדיפות</button>
-        <button *ngIf="user.isAdmin==true;" mat-stroked-button color="primary" class="button-margin" (click)="add()"> שמירה</button>
+        <button *ngIf="user.isAdmin==true;" mat-stroked-button color="primary" class="button-margin" (click)="addManager()"> שמירה</button>
       </div>
     </mat-step>
 
