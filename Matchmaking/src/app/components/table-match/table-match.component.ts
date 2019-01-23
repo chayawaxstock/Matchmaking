@@ -3,6 +3,8 @@ import { User } from 'src/app/shared/models/user';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Community } from 'src/app/shared/models/community';
 import { Hassid } from 'src/app/shared/models/hassid';
+import { SpiritualState } from 'src/app/shared/models/spiritualState';
+import { Work } from 'src/app/shared/models/work';
 
 export interface UserData {
   id: string;
@@ -15,6 +17,7 @@ export interface UserData {
   address:string;
   personaStar:number;//אשיות בכוכבים
   hassidoot:Hassid;
+  work:Work;//עבודה
 }
 
 @Component({
@@ -27,7 +30,7 @@ export class TableMatchComponent implements OnInit,OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @Input() usersMatch:UserData[]=[];
   @Input() nameUser:User;
-  displayedColumns: string[] = ['firstName', 'lastName', 'age','phone','address','personaStar','status','CommunityName','HassidootName'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'age','phone','address','personaStar','status','CommunityName','HassidootName',''];
   dataSource: MatTableDataSource<UserData>;
   
   constructor() { }
